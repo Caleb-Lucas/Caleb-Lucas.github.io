@@ -322,7 +322,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-21 18:08:16 / 修改时间：18:20:01" itemprop="dateCreated datePublished" datetime="2021-06-21T18:08:16+08:00">2021-06-21</time>
+              <time title="创建时间：2021-06-21 18:08:16 / 修改时间：18:21:00" itemprop="dateCreated datePublished" datetime="2021-06-21T18:08:16+08:00">2021-06-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -373,28 +373,14 @@
 </tbody>
 </table>
 <hr />
-<h4 id="notes"><a class="markdownIt-Anchor" href="#notes"></a> Notes:</h4>
-<ol>
-<li>该篇文章中利用FF组表来进行单一路径的恢复。</li>
-<li>FF组表被用来重定向一条流表，当这个活动桶受到链路故障的影响。</li>
-<li>链路恢复分为主动式和被动式，主动式是安装保护路径，不需要控制器的干预。被动式是当故障发生时，通过控制器来分配一条新的路径。</li>
-<li>在本文中，我们使用OpenFlow的内建组表特性来重新路由由于链路故障而中断的流。我们不是为所有现有流单独创建备份路径，而是计算相邻OpenFlow交换机之间最有效的备份路径。在这里，相邻交换机是指通过至少一条链路直接相互连接的交换机。控制器由一个查找表组成，其中填满了所有计算的备份路径。一旦连接在两个相邻的交换机之间发生故障，连接到中断的链路上的入口交换机立即将断开的链路要通过的所有流量合并起来，并用标识符对它们进行标记。然后，它们通过预先计算的路径被转发到断开链路另一端的交换机。同时，控制器通过查找表沿备份路径路径更新每个交换机的流表，方法是在匹配字段上输入一个标识符流条目。由于链路失效后使用的路径是预先计算的，控制器建立路由的时间非常短，明显比本地快速重路由机制快。还需要注意的是，与快速故障转移或保护机制不同，不会为单个源-目标对计算备份路径，这会导致相对较少的内存和最小的延迟。</li>
-<li>备份路径被计算在两种方法中：简单的混合整数线性规划和拥塞控制，由控制器更新在交换机。</li>
-<li>SDN网络的控制器出了安装和删除流项外，还具有更高的功能，如管理网络环境，更新拓扑映射，路径计算，网络对失效链路和交换机的响应等。</li>
-<li>本文中，提出GTR的技术中利用了交换机的这些功能，并与最先进的弹性技术相比，使用这些计算可以节省回复时间和内存。通过计算路由将所有包合并到一起重新路由，性能再次得到提高。对失效链路的入口和出口开关进行路由计算。</li>
-<li>控制器内的查找表维护所有相邻交换机的可能的组合。这包括网络中的所有活动链路和相应的备份路径，其中包括它所通过的交换机。</li>
-<li>链路失效阶段，入口交换机立刻将通过它的受影响的包标记上唯一性的标识符，这些包会通过之前计算好的备份路径进行转发。</li>
-<li>上述提到的这些活动都是通过在FF表中安装的的操作bucket完成的。</li>
-<li>一个OF 交换机有一个或多个包含流实体的流表，一个流实体有一组匹配域，相应的操作和一个计时器。还有特征组表，包含组实体。当流实体转发一个包通过组实体时，特征组表会执行。一个组实体包含三个组件，组标识符，组的类型和操作bucket。一个组实体根据它的类型有一个或多个操作bucket。
-<ol>
-<li>控制器和数据转发之间的通信由两种类型的包，packet-in 和 packet-out。任何一个OF交换机在收到一个包时，检查头部信息来与流表中的流实体进行对比，如果没有匹配成功，则将包发送给控制器（packet-in信息）。packet-out被控制器沿着数据路径，发送给邻近的控制器。</li>
-<li>控制器发送LLDP packet-out信息在发现发送间隔时间内，如果控制器在发现超时时间内没有收到packet-back信息，控制器断定属于自己的一条链路失败。</li>
-</ol>
-</li>
-<li>每当出现链接故障时，在入口开关处，所有受影响的流合并为单个流，并使用动作桶中提到的标识符进行标记。同时，控制器用流输入更新预先计划的路由上的交换机。流入口具有a)流在匹配字段被标记的特定标识符和b)它的动作，它指定了将流通过路由转发到断开链接的出口交换机的交换机。</li>
-</ol>
-<h4 id="summary"><a class="markdownIt-Anchor" href="#summary"></a> Summary:</h4>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -505,7 +491,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-21 17:58:19 / 修改时间：18:07:35" itemprop="dateCreated datePublished" datetime="2021-06-21T17:58:19+08:00">2021-06-21</time>
+              <time title="创建时间：2021-06-21 17:58:19 / 修改时间：18:21:16" itemprop="dateCreated datePublished" datetime="2021-06-21T17:58:19+08:00">2021-06-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -528,7 +514,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="notes"><a class="markdownIt-Anchor" href="#notes"></a> Notes:</h4>
+          <span id="more"></span>
+<h4 id="notes"><a class="markdownIt-Anchor" href="#notes"></a> Notes:</h4>
 <ol>
 <li>反应式的故障恢复方法：
 <ol>
