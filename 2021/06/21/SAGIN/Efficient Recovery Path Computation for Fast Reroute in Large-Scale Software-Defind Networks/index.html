@@ -27,13 +27,15 @@
 <meta property="og:site_name" content="CalebLogin的博客">
 <meta property="og:description" content="论文引用    论文编号 论文名称     4 P. Gill, N. Jain, and N. Nagappan, “Understanding network failures in data centers: Measurement, analysis, and implications,” ACM SIG- COMM Comput. Commun. Rev., vol. 41, no.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/fig5.png">
 <meta property="article:published_time" content="2021-06-21T10:08:17.000Z">
-<meta property="article:modified_time" content="2021-06-21T10:23:07.047Z">
+<meta property="article:modified_time" content="2021-06-23T11:38:01.795Z">
 <meta property="article:author" content="CalebLogin">
 <meta property="article:tag" content="SDN">
 <meta property="article:tag" content="故障恢复">
 <meta property="article:tag" content="大规模网络">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/fig5.png">
 
 <link rel="canonical" href="http://example.com/2021/06/21/SAGIN/Efficient%20Recovery%20Path%20Computation%20for%20Fast%20Reroute%20in%20Large-Scale%20Software-Defind%20Networks/">
 
@@ -180,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-21 18:08:17 / 修改时间：18:23:07" itemprop="dateCreated datePublished" datetime="2021-06-21T18:08:17+08:00">2021-06-21</time>
+              <time title="创建时间：2021-06-21 18:08:17" itemprop="dateCreated datePublished" datetime="2021-06-21T18:08:17+08:00">2021-06-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-23 19:38:01" itemprop="dateModified" datetime="2021-06-23T19:38:01+08:00">2021-06-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,16 +255,16 @@
 <td>N. L. van Adrichem, F. Iqbal, and F. A. Kuipers, “Backup rules in software-defined networks,” in Proc. IEEE NFV-SDN, Nov. 2016, pp. 179–185.</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>48</td>
+<td>D. Kempe, J. Kleinberg, and É. Tardos, “Maximizing the spread of influence through a social network,” in Proc. ACM SIGKDD, 2003, pp. 137–146.</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>33</td>
+<td>T. Akiba, Y. Iwata, and Y. Yoshida, “Fast exact shortest-path distance queries on large networks by pruned landmark labeling,” in Proc. ACM SIGMOD, 2013, pp. 349–360.</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>34</td>
+<td>T. Akiba, T. Hayashi, N. Nori, Y. Iwata, and Y. Yoshida, “Efficient top- k shortest-path distance queries on large networks by pruned landmark labeling,” in Proc. AAAI, 2015, pp. 2–8.</td>
 </tr>
 <tr>
 <td></td>
@@ -276,7 +284,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="-more-"><a class="markdownIt-Anchor" href="#-more-"></a> <span id="more"></span></h2>
+<hr />
 <p><s>#### 概述</s><br />
 <s>1. 本文提出了一种基于预计算备份路径并受多标签路由“曲背”路由的保护方案，在故障发生之后，不论控制器是否可达，甚至openflow的快速故障转移不起作用的时候，保证了故障检测后的实时的恢复，目的零丢包率。</s><br />
 <s>2. 该方法基于OpenState，允许编程人员指定转发规则以状态方式自动适应，从而减少对远程控制器的依赖。</s><br />
@@ -315,8 +323,93 @@
 <li>我们的设计利用的关键直觉是，我们可以通过预计算中间索引结果来加速恢复路径的设置。为此，我们将计算分为两个阶段:索引阶段和查询阶段。设计中的另一个关注点是存储索引时的空间开销。一种简单的方法是计算所有最终恢复路径并将它们存储在索引中。查询可以在O(1)的时间内完成(在计算完成后直接访问内存中的计算结果)。然而，索引的大小对于大型网络是不可接受的。在2跳覆盖策略[48]的驱动下，我们设计了一种剪枝搜索算法，通过平衡索引时间和查询时间来减少索引大小。我们的方法通过删除索引过程中不必要的结果，可以显著减少索引的大小。在查询恢复路径时，折衷方法是略微增加计算时间。直观地说，我们的方法迭代计算索引，并删除每次迭代后从不使用的中间结果。最后的路径结果可以在修剪后的索引上计算。例如，图3的例子显示了朴素方法和我们的方法在索引大小上的差异。</li>
 </ol>
 <h4 id="问题陈述"><a class="markdownIt-Anchor" href="#问题陈述"></a> 问题陈述</h4>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable width="100%"><mtr><mtd width="50%"></mtd><mtd><mrow><mi>f</mi><mi>d</mi><mi>f</mi><mi>d</mi></mrow></mtd><mtd width="50%"></mtd><mtd><mtext>(1)</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">fdfd \tag{1}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">d</span></span><span class="tag"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">(</span><span class="mord"><span class="mord">1</span></span><span class="mord">)</span></span></span></span></span></span></p>
+<h5 id="概括"><a class="markdownIt-Anchor" href="#概括"></a> 概括</h5>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><mi>V</mi><mo separator="true">,</mo><mi>E</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">G=(V,E) 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mclose">)</span></span></span></span></span></p>
+<h5 id="问题定义"><a class="markdownIt-Anchor" href="#问题定义"></a> 问题定义</h5>
+<ul>
+<li>简单地说，特定路径P(s, t)的恢复路径R(P(s, t))是另一条从s到t的路径，它不经过P(s, t)的第一条边。这条路径用于在原始路径的第一条链路失效时，将网络数据包从s重路由到t。正如我们上面提到的，使用FRR机制，重路由发生在交换机本地。换句话说，当交换机发生链路故障时，交换机在本地选择到目的端的恢复路径，以绕过从交换机到目的端的原始路径中的第一条失效链路。</li>
+<li>问题1寻求计算图G中任意一对节点之间的任何路径的最短恢复路径。</li>
+<li>对于问题2，我们首先定义保证代价η(P(s, t))为最坏情况恢复场景中实际路径P(s, t)之后的数据包的代价。因为P(s, t)在不同的链路故障场景下会导致不同的恢复成本，所以有一个故障场景会导致最大的恢复成本，比如η(P(s, t))。如前所述，保证代价最短的路径Gp(s, t)是从s到t的保证代价最小的路径。</li>
+<li>定义两个问题：
+<ul>
+<li>计算路径(s,t)的最短恢复路径：对于给定的路径(s,t)之间的任意一对节点，返回节点s到节点t的最短路径。</li>
+<li>计算代价最短路径：有这样一条路径，节点s到节点t之间有最小的保证代价。</li>
+</ul>
+</li>
+</ul>
+<h4 id="最短恢复路径"><a class="markdownIt-Anchor" href="#最短恢复路径"></a> 最短恢复路径</h4>
+<ul>
+<li>正如我们上面提到的，我们的算法通过减少不必要的计算量来提高效率。我们将计算分为两个阶段:索引阶段和查询阶段;我们证明了索引阶段可以避免大部分不必要的计算任务。</li>
+<li>在本节中，我们将首先描述查询阶段的算法:如何利用索引中间结果的知识查询最短的恢复路径。然后，我们将在索引阶段描述算法，这是我们提出的核心贡献:如何索引中间结果，并通过剪枝策略(或剪枝搜索)减少不必要的结果。</li>
+</ul>
+<h5 id="2-hop-cover查询最短恢复路径"><a class="markdownIt-Anchor" href="#2-hop-cover查询最短恢复路径"></a> 2-hop cover查询最短恢复路径</h5>
+<ul>
+<li>首先介绍了如何利用2跳覆盖[48]来查询最短恢复路径。直观地说，2-hop覆盖提供了通过结合两个简单路径计算(如最短路径)的结果来计算复杂路径(带有一些边/节点约束)的能力。我们在表II中给出了约束路径的符号。假设V中的每个节点都被分配了一个整数形式的节点ID。因此我们能够比较两个节点通过比较节点ID的形式。</li>
+<li>分离恢复路径P(s,t)为两部分，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>P</mi><mrow><mo>=</mo><mi>x</mi><mo separator="true">,</mo><mo>=</mo><mi>y</mi></mrow><mrow><mo>&gt;</mo><mi>u</mi></mrow></msubsup><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P^{&gt;u}_{=x,=y}(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.133108em;vertical-align:-0.383108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.74037em;"><span style="top:-2.4530000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">=</span><span class="mord mathdefault mtight">x</span><span class="mpunct mtight">,</span><span class="mrel mtight">=</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight">u</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>表示路径必须以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mrow><mi>u</mi><mo separator="true">,</mo><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">e_{u,x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">u</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>开始，以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mrow><mi>y</mi><mo separator="true">,</mo><mi>v</mi></mrow></msub></mrow><annotation encoding="application/x-tex">e_{y,v}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>结束。</li>
+<li>定义最短恢复路径的代价：</li>
+</ul>
+<h5 id="用剪枝策略索引中间结果"><a class="markdownIt-Anchor" href="#用剪枝策略索引中间结果"></a> 用剪枝策略索引中间结果：</h5>
+<ul>
+<li>使用QUERY来计算最短恢复路径在已经计算过的路径上。用根u初始化队列，如果没有找到新的路径，BFS将停止。此外，我们在BFS算法中增加了一个扩展约束，以保证每个扩展节点都大于u，但直接计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mo>&gt;</mo><mi>u</mi></mrow></msup><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P^{&gt;u}(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.74037em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight">u</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>是一种蛮力方法，这导致了大量的空间和时间。基于对最短路径和第k条最短路径[33]，[34]的精简搜索，我们认为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mo>&gt;</mo><mi>u</mi></mrow></msup><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P^{&gt;u}(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.74037em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight">u</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>中的大多数路径都不需要计算最短恢复路径。</li>
+<li>因此，在计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>P</mi><mrow><mo>&gt;</mo><mi>u</mi></mrow></msup><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P^{&gt;u}(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.74037em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight">u</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>时使用剪枝策略来剪枝不必要的结果和减少索引时间是必要的。这个框架被称为剪枝搜索<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/fig5.png" alt="fig5" /></li>
+</ul>
+<ol>
+<li>场景A</li>
+<li>场景B</li>
+<li>场景C<br />
+场景CD：如果w→t在s→w相交，则不需要其他路径</li>
+<li>场景D<br />
+可以保证当w→t在s→w相交时，可以找到一条比s→w→t短的恢复路径。</li>
+</ol>
+<ul>
+<li>命题1</li>
+</ul>
+<h4 id="最短保证代价路径计算"><a class="markdownIt-Anchor" href="#最短保证代价路径计算"></a> 最短保证代价路径计算</h4>
+<h4 id="评估"><a class="markdownIt-Anchor" href="#评估"></a> 评估</h4>
+<ul>
+<li>本节分为两部分。第一部分评估我们的算法在各种数据集上的性能。在第二部分中，我们用Mininet和Open vSwitch (OvS)实现了一个原型，以展示我们的解决方案和传统方法之间的链路恢复时间的差异。</li>
+</ul>
+<ol>
+<li>环境。</li>
+</ol>
+<ul>
+<li>我们首先在使用Intel i7-6700@4GHz和32GB DDR4内存的Linux服务器上进行实验，评估我们的算法。我们使用c<ins>来实现我们的算法，并让它在GitHub的仓库[50]上公开可用。由于编译器优化的效率可能会根据不同的cpu而有所不同，我们决定不打开g</ins>中的编译器优化选项，以便进行公平的比较。因此，我们使用g++进行编译而无需任何优化。我们使用2字节整数(UNSIGNED SHORT)来表示节点ID和代价。我们通过测量100万个随机查询来评估平均查询时间。</li>
+<li>数据集:为了确认我们的方法足够健壮和可扩展，我们在各种现实网络[35]，[36]上评估了我们的算法:三种来自运营商主干网，七种来自AS网络。虽然TOPO8和TOPO9有超过20,000个节点，这在SDN中并不常见，但我们仍然使用这些拓扑来测试我们算法的可伸缩性。我们把所有的拓扑都看成无向图。由于原始拓扑没有代价信息，我们通过gamma分布(从测量结果[51])分配每个边的代价，α =0.2463，λ =55.9280，代价的尺度范围从1到524。我们在表III中给出了这些网络的参数。</li>
+<li>由于节点的度会影响l，而l与我们算法的性能有关，所以我们度量网络的度分布。这些网络遵循幂律分布(80-20规则)，这意味着超过80%的顶点角度小于2。同时，我们度量了路径代价在全对节点上的分布。我们发现80%到90%的成本低于100。</li>
+</ul>
+<ol start="2">
+<li>计算最短恢复路径的性能</li>
+</ol>
+<ul>
+<li>首先，我们在TABLE IV中展示了在这些真实世界拓扑上计算最短恢复路径的性能。IT表示索引时间;MS表示内存大小，表示存储L和拓扑的内存使用情况;QT表示平均查询时间。CT表示计算时间，由索引时间和查询时间组成。我们还对两种现有方法的性能进行了评价。一个是优化的预计算[28]，另一个是朴素的Dijkstra[27]。后者是直接查询最短恢复路径(R(P(s, t)))的算法。我们还使用c<ins>和g</ins>实现了这些算法。因为预先计算优化算法必须计算所有成对最短恢复路径来得到正确的结果,优化计算后的CT表示全对s和t的恢复路径计算时间，朴素Dijkstra算法的CT表示查询图中所有对节点最短恢复路径的时间。SR表示加速比，它是将优化预计算或朴素Dijkstra的计算时间除以我们算法的计算时间计算出来的。我们通过索引时间和查询次数乘以需要保护的节点数来估算TOPO8、TOPO9的CT，因为全对保护的计算时间超过半小时，而保护20k以上的节点在现实中并不常见。‘NA’表示朴素的Dijkstra和优化的预计算不能在半小时内完成计算。</li>
+<li>1)索引时间和计算时间:从表4中我们可以看到索引时间(算法2)非常小，说明算法比其他算法更具有可扩展性。虽然优化后的预计算算法降低了朴素Dijkstra算法的时间复杂度，但剪枝搜索算法的计算时间远远小于其他算法。我们的算法计算时间比TOPO1、TOPO2和TOPO3优化后的预计算时间要长，而且这些拓扑都是小拓扑。作为开销，TOPO1和TOPO2的索引时间开销最大。2）查询时间:如前所述，查询时间依赖于l。查询算法可以在微秒级查询结果，因为所有的l都小于103，最长的QT是83 μs。虽然优化的预计算算法没有利用查询中的任何时间，但计算时间太长，无法抵消其优点。此外，我们的实验表明，查询时间并不会随着网络规模的增加而迅速增加。3)内存大小:我们的算法受益于2跳覆盖策略，使用内存空间来存储中间结果。我们可以看到TOPO3 (817 MB)的内存使用比TOPO2和TOPO4大，因为我们有更大的l(86)。观察到TOPO3中有许多线性拓扑子图，使l变大，证明了这一结果。我们认为当前的商用服务器内存一般都在32GB以上，内存的使用已经足够了。同时随着现代存储技术的快速发展，应该容易满足存储空间的要求。然而，为了进一步提高可伸缩性，我们仍然需要减少内存大小，这将在今后的工作中进行研究。</li>
+</ul>
+<ol start="3">
+<li>分析</li>
+</ol>
+<ul>
+<li>修剪搜索:图7 (a)显示的数量的累积分布路径添加到L .从图7 (a)我们可以看到,在调用索引1000次之前大多数路径添加到L(第二行算法2),这意味着调用1000次索引后大多数的计算恢复路径是不必要的。</li>
+<li>L的大小:图7(b)显示了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>L</mi><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|L(v)|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span>在大小上的分布。由图7(b)可以看出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∀</mi><mi>v</mi><mo>∈</mo><mi>V</mi><mo separator="true">,</mo><mi mathvariant="normal">∣</mi><mi>L</mi><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">∀v∈V,|L(v)|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord">∀</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∣</span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span><span class="mord">∣</span></span></span></span>在所有查询时间中差别不大，比较稳定。</li>
+</ul>
+<ol start="4">
+<li>计算最短保证代价路径的性能</li>
+</ol>
+<ul>
+<li>利用全对最短恢复路径的知识，给出了在一些大规模拓扑(TOPO6、TOPO7、TOPO8、TOPO9和TOPO10)下的性能和特性评估结果。大规模拓扑可以提供更多的路径来分析最短保证代价路径的特性。我们在表V中给出了最大QT(大部分QT非常小，因为r很小)。</li>
+<li>如前面所述，r是R(v)的平均大小，与l和L(v)的定义相似，表示修剪策略的效率。在我们的评估中,我们发现r是1,因为这些网络中的大多数节点没有另一种恢复路径到达其他节点(例如,大部分节点的度是1)。例如,一个节点只有一条边意味着它无法找到另一条路,如果仅有的一条边失败了。因此，这些节点的|R|不大于1。另一方面，如果网络中有大量节点有大量的度可用，那么IT将会较小。其原因是，在剪枝搜索[33]中，度较大的节点(大多数路径必须经过这些中心顶点)可以显著增加剪枝的概率。</li>
+</ul>
+<ol start="5">
+<li>最短保证代价路径的特征</li>
+</ol>
+<ul>
+<li>以TOPO7和TOPO10为例，分析了最短保证成本路径的特征。通过比较最短路径的路径代价、最短保证代价路径、最短路径的最大恢复路径和最短保证代价路径的最大恢复路径，评价最短保证代价路径的特性。</li>
+<li>我们将主路径定义为数据包默认经过的路径。从图8(a)(b)可以看出，选择最短的保证成本路径作为主路径可以显著降低恢复路径的最大成本。在图8(a)中，当我们选择最短的保证成本路径作为主路径时，所有恢复路径都小于300。同时，80%的恢复路径小于100，如果选择最短路径作为主路径，这一比例大于60%。同时，从图8(b)中可以看出，恢复路径的最大开销从400减少到250，减少了150，而主路径的开销只增加了50，从100增加到150。显然，最短保证成本路径可以显著降低恢复路径的成本。</li>
+</ul>
+<ol start="6">
+<li>原型的实现与评估</li>
+</ol>
 
     </div>
 
@@ -399,7 +492,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-more-"><span class="nav-number"></span> <span class="nav-text"> </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%87%BA%E7%9A%84%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 提出的算法概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text"> 背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text"> 设计原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%99%88%E8%BF%B0"><span class="nav-number">5.</span> <span class="nav-text"> 问题陈述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%87%BA%E7%9A%84%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text"> 提出的算法概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text"> 背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text"> 设计原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%99%88%E8%BF%B0"><span class="nav-number">6.</span> <span class="nav-text"> 问题陈述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A6%82%E6%8B%AC"><span class="nav-number">6.1.</span> <span class="nav-text"> 概括</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.</span> <span class="nav-text"> 问题定义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%9F%AD%E6%81%A2%E5%A4%8D%E8%B7%AF%E5%BE%84"><span class="nav-number">7.</span> <span class="nav-text"> 最短恢复路径</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-hop-cover%E6%9F%A5%E8%AF%A2%E6%9C%80%E7%9F%AD%E6%81%A2%E5%A4%8D%E8%B7%AF%E5%BE%84"><span class="nav-number">7.1.</span> <span class="nav-text"> 2-hop cover查询最短恢复路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E5%89%AA%E6%9E%9D%E7%AD%96%E7%95%A5%E7%B4%A2%E5%BC%95%E4%B8%AD%E9%97%B4%E7%BB%93%E6%9E%9C"><span class="nav-number">7.2.</span> <span class="nav-text"> 用剪枝策略索引中间结果：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%9F%AD%E4%BF%9D%E8%AF%81%E4%BB%A3%E4%BB%B7%E8%B7%AF%E5%BE%84%E8%AE%A1%E7%AE%97"><span class="nav-number">8.</span> <span class="nav-text"> 最短保证代价路径计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">9.</span> <span class="nav-text"> 评估</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
