@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-24 14:19:41 / 修改时间：14:26:17" itemprop="dateCreated datePublished" datetime="2021-06-24T14:19:41+08:00">2021-06-24</time>
+              <time title="创建时间：2021-06-24 14:19:41 / 修改时间：14:30:33" itemprop="dateCreated datePublished" datetime="2021-06-24T14:19:41+08:00">2021-06-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -233,64 +233,16 @@
 </table>
 <h4 id="意义"><a class="markdownIt-Anchor" href="#意义"></a> 意义</h4>
 <ul>
-<li>
-<p>As the backbone network of the space and terrestrial network, the timely detection and restoration of communication capabilities of satellite net- work faults ensure the healthy and stable operation of the network</p>
-</li>
-<li>
-<p>首先说明了临时故障与持久故障之间的区别。空间中的带电粒子会围绕在天线的周围，会临时阻止信息的传输。太阳爆发活动产生的高能带电粒子会攻击卫星设备，造成卫星设备的不正常运行。</p>
-</li>
-<li>
-<p>其次，对于不同类型的故障，要采用不同方式的路由恢复方法。</p>
-</li>
-<li>
-<p>本文提出了一种新的低负载信息收集机制，收集分离在∆t时间内成功传输路径的相关信息，并计算出reachable.unreachable和unknown区域。在这个基础上，基于贝叶斯决策理论，当已知状态收到限制时，后验可能性指标表示不同故障类型的后验可能性。该后验可能性是通过不同故障类型的先验可能性来获得的。与最大化后验可能性指标不同，通过设置后验可能性的阈值，不同类型的故障链路结果能够输出，这样更适合易于故障的卫星网络。误判的结果还能够在第二阶段的测试中得到证实。与此同时，在基于强化学习的Q学习算法的基础上，提出了基础上述故障检测的故障恢复方法。收集到的信息被用来更新由一个二维状态空间和一位活动空间组成的Q值表。对于不同类型的故障，更新本地的状态空间和不同关联节点的活动空间来实现对不同故障类型来分别进行路由恢复的目的。因为奖励函数包括队列时间，传输时间和链路存活时间，权值因子也关联链路存活时间，所以可以有效的减少网络的动态性在路由结果的稳定性和路径连接稳定性上的影响。</p>
-</li>
-<li>
-<p>故障检测步骤：</p>
-</li>
+<li>As the backbone network of the space and terrestrial network, the timely detection and restoration of communication capabilities of satellite net- work faults ensure the healthy and stable operation of the network</li>
 </ul>
-<ol>
-<li>决定两种故障类型的先验概率</li>
-<li>在t时间内收集成功传输数据的路径信息</li>
-<li>根据收集到的信息网络区域<br />
-(a) 节点报告未收到应收到的数据包，将相应路由结果上的节点添加到集合Si，根据传输方向以节点对的形式添加到Yi，故障链路被表示成pi (Si,Yi)<br />
-(b) 在t时间间隔内，通过正常传输的路径集M，收集成功发送和接受信息的链路，并根据传输方式以节点对的形式存入集合S<br />
-© 路径pi的终端发送阶段定义为初始节点nu，接收节点被定义为节点ne，可到达域R = {nu}，不可到达域 —R = {ne}，未知域U = 空集<br />
-(d) 对于P集合内的其他故障路径，如果初始节点相同，将接收节点存入-R，如果初始节点不同，跳到（6）<br />
-(e) 将可达区域R的边界节点与C中的链路进行比较。如果有一条链路在R中的节点与C中节点n之间，将n也加入可达区域R，重复这个步骤，直到没有这种节点为止。<br />
-(f) 剩余的节点加入未知区域U中，这样就构造了一个包含可达域，不可达域，未知域的故障检测模型。该模型以一条故障路径p1为例。模型构建步骤对每个失败路径都是重复的。应该注意的是，为了满足卫星网络的特殊需要，这种机制假设失败路径的接收端节点属于不可达的基于区域—R。这种假设与原始定义相比，会导致增加疑似错误链接，准确率可能会降低。但由于该机制由两个检测阶段组成，所以第二个阶段的检测将减少这一假设对机制整体性能的影响。</li>
-<li>使用贝叶斯公式计算每条链路故障类型的可能性</li>
-<li>确定故障链路是否存在</li>
-<li>根据阈值获得产生的故障链路结果</li>
-<li>判断故障概率</li>
-<li>在第一阶段进行故障类型的分类和判断，根据（4）计算的故障概率指数对故障链路进行初步故障类型判断</li>
-<li>执行第二阶段的故障类型判断
-<ul>
-<li>在这一阶段，我们利用卫星网络的拓扑变化特征以及拓扑变化后的新邻居节点或新通信节点对类型未知的故障链路进行进一步的故障类型检测。对于本文的研究对象极地轨道星座，星间链路可以分为无缝区链路和有缝区链路。对于无接缝区域链路，在拓扑变化后，可以使用新连接的地面站或新连接的卫星节点进行进一步的故障类型检测。对于接缝区的链路，可以直接使用拓扑变化后新的邻近节点进行进一步检测。</li>
-</ul>
-</li>
-<li>获得输出结果并且获得链路故障位置和类型
-<ul>
-<li>有两点需要注意：</li>
-<li>在步骤（3）有一个特殊情况，当只存在可达域和不可达域，不存在未知域时，步骤（4）的计算公式不能使用。这种情况意味着肯定存在至少一条链路一个端在可达域，另一个端在不可达域。这样的链路肯定是一条故障链路；否则这种情况是不存在的。这种情况直接被步骤（9）检测。</li>
-<li>在步骤（6）中，因为阈值决定结果，故障链路的结果包括正确的故障链路和被误判的正常链路。在步骤（9）的故障处理阶段，所有的故障链路都会被检测，并且故障端口被确定。误判的链路在这个阶段能够被有效的评估。</li>
-</ul>
-</li>
-</ol>
-<h4 id="数学模型"><a class="markdownIt-Anchor" href="#数学模型"></a> 数学模型：</h4>
-<ul>
-<li>步骤：<br />
-（1）初始化每个节点的Q表<br />
-（2）卫星和地面节点交换管理信息和时间信息。地面站发送更新后的Q表、影响因子、学习率给每一个卫星节点，卫星节点接收到最新的q值表后，将各节点数据传输的排队时间tq发送给地面站，用于实时更新q值表。<br />
-（3）确定故障链路是否触发了故障检测机制，如果触发了，goto（4），如果没有goto（7）<br />
-（4）<br />
-（5）根据第二阶段的检测结果，更新Q值表<br />
-（6）组织故障情况，重新组织拓扑，goto（1）<br />
-（7）当网络正常运行的时候，根据公式更新Q值表。<br />
-（8）确定网络拓扑是否已经改变。在卫星网络正常操作阶段，因为卫星间链路的切换导致拓扑的改变。如果链路发生切换导致网络拓扑的改变，goto（9），否则goto（2）<br />
-（9）将相关链路Q-transfer到链路转换所在节点。</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/24/SAGIN/Recovery%20Routing%20Based%20on%20Q-Learning%20for%20Satellite%20Network%20Faults/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -334,7 +286,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-24 14:13:14 / 修改时间：14:14:22" itemprop="dateCreated datePublished" datetime="2021-06-24T14:13:14+08:00">2021-06-24</time>
+              <time title="创建时间：2021-06-24 14:13:14 / 修改时间：14:30:20" itemprop="dateCreated datePublished" datetime="2021-06-24T14:13:14+08:00">2021-06-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -364,74 +316,15 @@
 <li>Huang, L.; Shen, Q.; Shao, W. Congestion Aware Fast Link Failure Recovery of SDN Network Based on Source Routing. KSII Trans. Internet Inf. Syst. 2017, 11, 5200–5222.</li>
 <li>Capone, A.; Cascone, C.; Nguyen, A.Q.T.; Sanso, B. Detour planning for fast and reliable failure recovery in SDN with OpenState. In Proceedings of the International Conference on Design of Reliable Communication Networks, Kansas City, MO, USA, 24–27 March 2015; pp. 25–32.</li>
 <li>Ramos, R.M.; Martinello, M.; Rothenberg, C.E. SlickFlow: Resilient source routing in Data Center Networks unlocked by OpenFlow. In Proceedings of the 38th Annual IEEE Conference on Local Computer Networks, Sydney, Australia, 21–24 October 2013; pp. 606–613.</li>
-<li>Siminesh, C.N.; Grace, M.K.E.; Ranjitha, K. A proactive flow admission and re-routing scheme for load balancing and mitigation of congestion propagation in sdn data plane. Int. J. Comput. Netw. Commun. 2019, 10, 2018.</li>
-<li>Soliman, M.; Nandy, B.; Lambadaris, I.; Ashwood-Smith, P. Exploring source routed forwarding in SDN-based WANs. In Proceedings of the 2014 IEEE International Conference on Communications, Sydney, Australia, 10–14 June 2014; pp. 3070–3075.</li>
-<li>Soliman, M.; Nandy, B.; Lambadaris, I.; Ashwood-Smith, P. Source routed forwarding with software defined control, considerations and implications. In Proceedings of the 2012 ACM Conference on CONEXT Student Workshop, Nice, France, 10 December 2012; pp. 43–44.</li>
-<li>Sangeetha Abdu, J.; Dong, M.; Godfrey, P.B. Towards a flexible data center fabric with source routing. In Proceedings of the 2015 1st ACM SIGCOMM Symposium on Software Defined Networking Research, Santa Clara, CA, USA, 17–18 June 2015; pp. 1–8.</li>
-<li>Kreutz, D.; Ramos, F.M.V.; Veríssimo, P.E.; Rothenberg, C.E.; Azodolmolky, S.; Uhlig, S. Software-defined networking: A comprehensive survey. Proc. IEEE 2015, 103, 14–76. [CrossRef]</li>
-<li>Chang, D.F.; Govindan, R.; Heidemann, J. The temporal and topological characteristics of bgp path changes in Network Protocols. In Proceedings of the 11th IEEE International Conference on Network Protocols, 2003, Proceedings, Atlanta, GA, USA, 4–7 November 2003; pp. 190–199.</li>
-<li>Francois, P.; Bonaventure, O.; Decraene, B.; Coste, P.A. Avoiding disruptions during maintenance operations on bgp sessions. IEEE Trans. Netw. Serv. Manag. 2007, 4, 2007.</li>
-<li>Iannaccone, G.; Chuah, C.N.; Mortier, R.; Bhattacharyya, S.; Diot, C. Analysis of link failures in an ip backbone. In Proceedings of the 2nd ACM SIGCOMMWorkshop on Internet Measurment, Marseille, France, 6–8 November 2002; ACM: New York, NY, USA, 2002; pp. 237–242.</li>
-<li>Vissicchio, S.; Vanbever, L.; Pelsser, C.; Cittadini, L.; Francois, P.; Bonaventure, O. Improving network agility with seamless bgp reconfigurations. IEEE/ACM Trans. Netw. (TON) 2013, 21, 990–1002.</li>
-<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. Enabling fast failure recovery in openflow networks. In Proceedings of the 2011 8th International Workshop on the Design of Reliable Communication Networks (DRCN), Kraków, Poland, 10–12 October 2011; pp. 164–171.</li>
 </ol>
-<h4 id="被动故障恢复"><a class="markdownIt-Anchor" href="#被动故障恢复"></a> 被动故障恢复</h4>
-<ol>
-<li>Muthumanikandan,V.; Valliyammai1, C. Link Failure Recovery Using Shortest Path Fast Rerouting Technique in SDN. Wirel. Pers. Commun. 2017, 97, 2475–2495.</li>
-<li>Astaneh, S.A.; Heydari, S.S. Optimization of SDN_ow operations in multi-failure restoration scenarios. IEEE Trans. Netw. Serv. Manag. 2016, 13, 421–432. [CrossRef]</li>
-<li>Astaneh, S.; Heydari, S.S. Multi-failure restoration with minimal flow operations in software defined networks. In Proceedings of the 2015 11th International Conference on the Design of Reliable Communication Networks (DRCN), Kansas City, MO, USA, 24–27 March 2015; pp. 263–266.</li>
-<li>Jin, X.; Liu, H.H.; Gandhi, R.; Kandula, S.; Mahajan, R.; Zhang, M.; Rexford, J.; Wattenhofer, R. Dynamic scheduling of network updates. ACM SIGCOMM Comput. Commun. Rev. 2014, 44, 539–550.</li>
-<li>Malik, A.; Aziz, B.; Adda, M.; Ke, C.H. Optimisation Methods for Fast Restoration of Software-Defined Networks. IEEE Access 2017, 5, 16111–16123. [CrossRef]</li>
-<li>Maesschalck, S.D.; Colle, D.; Lievens, I.; Pickavet, M.; Demeester, P.; Muaz, C.; Jaeger, M.; Inkret, R.; Mikac, B.; Derkacz, J. Pan-European optical transport networks: An availability-based comparison. Photon. Netw. Commun. 2003, 5, 203–225. [CrossRef]</li>
-<li>Voellmy, A.; Wang, J. Scalable software defined network controllers. In Proceedings of the 2012 ACM SIGCOMM Conference, Helsinki, Finland, 13–17 August 2012; ACM: New York, NY, USA, 2012; pp. 289–290.</li>
-</ol>
-<h4 id="大规模网络故障恢复"><a class="markdownIt-Anchor" href="#大规模网络故障恢复"></a> 大规模网络故障恢复</h4>
-<ol>
-<li>Karakus, M.; Durresi, A. A Survey: Control Plane Scalability Issues and Approaches in Software-Defined Networking (SDN). Comput. Netw. 2017, 112, 279–293.</li>
-<li>Qiu, K.; Yuan, J.; Zhao, J.; Wang, X.; Secci, S.; Fu, X. Efficient Recovery Path Computation for Fast Reroute in Large-scale Software Defined Networks. IEEE J. Sel. Areas Commun. 2018, 37, 1755–1768.</li>
-<li>Abdelaziz, A.; Fong, A.T.; Gani, A.; Garba, U.; Khan, S.; Akhunzada, A.; Talebian, H.; Choo, K.W.R. Distributed controller clustering in software defined networks. PLoS ONE 2017.</li>
-<li>Sinha, Y.; Haribabu, K. A survey: Hybrid SDN. J. Netw. Comput. Appl. 2017, 100, 35–55.</li>
-</ol>
-<h4 id="混合网络故障恢复"><a class="markdownIt-Anchor" href="#混合网络故障恢复"></a> 混合网络故障恢复</h4>
-<ol>
-<li>Caesar, M.; Caldwell, D.; Feamster, N.; Rexford, J.; Shaikh, A.; van der Merwe, J. Design and implementation of a routing control platform. In Proceedings of the 2nd Conference on Symposium on Networked Systems Design&amp;Implementation-Volume 2, Boston, MA, USA, 2 May 2005; USENIX Association: Berkeley, CA, USA, 2005; pp. 15–28.</li>
-<li>Jin, C.; Lumezanu, C.; Xu, Q.; Zhang, Z.L.; Jiang, G. Telekinesis: Controlling legacy switch routing with OpenFlow in hybrid networks. In Proceedings of the 1st ACM SIGCOMM Symposium on Software Defined Networking Research, Santa Clara, CA, USA, 17–18 June 2015; ACM: New York, NY, USA, 2015; p. 20.</li>
-<li>Tilmans, O.; Vissicchio, S.; Vanbever, L.; Rexford, J. Fibbing in action: On-demand load-balancing for better video delivery. In Proceedings of the ACM SIGCOMM 2016 Conference, Florianopolis, Brazil, 22–26 August 2016; ACM: New York, NY, USA, 2016; pp. 619–620.</li>
-<li>Chu, C.Y.; Xi, K.; Luo, M.; Chao, H.J. Congestion-Aware Single Link Failure Recovery in Hybrid SDN Networks. In Proceedings of the 2015 IEEE Conference on Computer Communications (INFOCOM), Kowloon, Hong Kong, 26 April–1 May 2015.</li>
-<li>Rothenberg, C.E.; Nascimento, M.R.; Salvador, M.R.; Correa, C.N.A.; Lucena, S.C.D.; Raszuk, R. Revisiting routing control platforms with the eyes and muscles of software-defined networking. In Proceedings of the first ACM SIGCOMM workshop on HotSDN, Helsinki, Finland, 13 August 2012; Association for Computing Machinery: New York, NY, USA, 2012.</li>
-<li>Vissicchio, S.; Vanbever, L.; Cittadini, L.; Xie, G.; Bonaventure, O. Safe Updates of Hybrid SDN Networks. IEEE/ACM Trans. Netw. 2017, 25, 1649–1662. [CrossRef]</li>
-<li>Kvalbein, A.; Hansen, A.F.; Cicic, T.; Gjessing, S.; Lysne, O. Fast ip network recovery using multiple routing configurations. In Proceedings of the IEEE INFOCOM, Barcelona, Spain, 23–29 April 2006.</li>
-<li>Suchara, M.; Xu, D.; Doverspike, R.; Johnson, D.; Rexford, J. Network architecture for joint failure recovery and traffic engineering. ACM SIGMETRICS Perform. Eval. Rev. 2011, 39, 97–108.</li>
-<li>Reitblatt, M.; Canini, M.; Guha, A.; Foster, N. Fattire: Declarative fault tolerance for software-defined networks. In Proceedings of the second ACMSIGCOMMWorkshop on HotSDN, Hong Kong, China, August 2013 ; Association for Computing Machinery: New York, NY, USA, 2013.</li>
-<li>Vissicchio, S.; Vanbever, L.; Bonaventure, O. Opportunities and research challenges of hybrid software defined networks. ACM SIGCOMM Comput. Commun. Rev. 2014, 44, 70–75. [CrossRef]</li>
-<li>Vissicchio, S.; Vanbever, L.; Cittadini, L.; Xie, G.G.; Bonaventure, O. Safe routing reconfigurations with route redistribution. In Proceedings of the IEEE INFOCOM, Toronto, ON, Canada, 27 April–2 May 2014; pp. 199–207.</li>
-</ol>
-<h4 id="域间网络故障恢复"><a class="markdownIt-Anchor" href="#域间网络故障恢复"></a> 域间网络故障恢复</h4>
-<ol>
-<li>Chun-xiu, L.; Xin, L.; Ke, L.; Hong, Z.; Yu-long, S.; Shan-zhi, C. Toward software defined AS-level fast rerouting. J. China Univ. Posts Telecommun. 2014, 21, 100–108.</li>
-<li>Rekhter, Y.; Li, T. A Border Gateway Protocol 4 BGP-4; ARPANET Working Group Requests for Comment; RFC-1771; DDN Network Information Center: Menlo Park, CA, USA, March 1995.</li>
-<li>Skoldstrom, P.; Yedavalli, K. Network Virtualization and Resource Allocation in OpenFlow-Based Wide Area Networks. In Proceedings of the 2012 IEEE International Conference on Communications (ICC), Ottawa, ON, Canada, 10–15 June 2012.</li>
-</ol>
-<h4 id="带内网络故障恢复"><a class="markdownIt-Anchor" href="#带内网络故障恢复"></a> 带内网络故障恢复</h4>
-<ol>
-<li>OpenFlow Reference Switch Implementation. Available online: <a target="_blank" rel="noopener" href="http://www.openflow.org/">http://www.openflow.org/</a> (accessed on 27 January 2020).</li>
-<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. Fast failure recovery for in-band OpenFlow netwoks. In Proceedings of the 2013 9th International Conference on the Design of Reliable Communication Networks (DRCN), Budapest, Hungary, 4–7 March 2013.</li>
-<li>Schiff, L.; Schmid, S.; Canini, M. Medieval: Towards A Self-Stabilizing Plug &amp; Play In-Band SDN Control Network. In Proceedings of the ACM Sigcomm Symposium on SDN Research (SOSR), Santa Clara, CA, USA, 17–18 June 2015.</li>
-<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. In-Band Control Queuing and Failure Recovery Functionalities for OpenFlow. IEEE Netw. 2016, 30, 106–112.</li>
-<li>Schiff, L.; Kuznetsov, P.; Schmid, S. In-Band Synchronization for Distributed SDN Control Planes. SIGCOMM Comput. Commun. Rev. 2016, 46, 37–43.</li>
-<li>Evans, D. The Internet ofThings: How the Next Evolution ofthe Internet Is Changing Everything; White Paper; Cisco: San Jose, CA, USA, 2011.</li>
-</ol>
-<h4 id="基于机器学习的故障恢复"><a class="markdownIt-Anchor" href="#基于机器学习的故障恢复"></a> 基于机器学习的故障恢复</h4>
-<ol>
-<li>Xu, W.; Zhou, H.; Cheng, N.; Lyu, F.; Shi, W.; Chen, J.; Shen, X. Internet of Vehicles in Big Data Era. IEEE/CAA J. Autom. Sin. 2018, 5, 19–35.</li>
-<li>Wang, M.; Cui, Y.; Wang, X.; Xiao, S.; Jiang, J. Machine Learning for Networking: Workflow, Advances and Opportunities. IEEE Netw. 2018, 32, 92–99.</li>
-<li>Klaine, P.V.; Imran, M.A.; Onireti, O.; Souza, R.D. A survey of machine learning techniques applied to self-organizing cellular networks. IEEE Commun. Surv. Tutor. 2017, 19, 2392–2431. [CrossRef]</li>
-<li>Khunteta, S.; Chavva, A.K.R. Deep Learning Based Link Failure Mitigation. In Proceedings of the 2017 16th IEEE International Conference on Machine Learning and Applications (ICMLA), Cancun, Mexico, 18–21 December 2017.</li>
-<li>Srinivasan, S.M.; Truong-Huu, T.; Gurusamy, M. TE-Based Machine Learning Techniques for Link Fault Localization in Complex Networks. In Proceedings of the IEEE 6th International Conference on Future Internet of Things and Cloud (FiCloud), Barcelona, Spain, 6–8 August 2018.</li>
-<li>Truong-Huu, T.; Mohan, P.M. Fast and Adaptive Failure Recovery using Machine Learning in Software Defined Networks. In Proceedings of the 2019 IEEE International Conference on CommunicationsWorkshops (ICC Workshops), Shanghai, China, 20–24 May 2019.</li>
-<li>Dilmaghani, R.; Bottin, T. Evaluation of Software-Defined Networking for Mission Operations. In Proceedings of the 21st International Command and Control Research and Technology Symposium (ICCRTS), London, UK, 6–8 September 2016.</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/24/SAGIN/recovery-total/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
