@@ -20,23 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="论文引用    论文编号 论文名称     12 A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw.,">
+  <meta name="description" content="论文引用    论文编号 论文名称     10    11    12    13    28      意义   As the backbone network of the space and terrestrial network, the timely detection and restoration of communication capabilities of satellit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Link Failure Recovery Mechanism in Software Defined Networks">
-<meta property="og:url" content="http://example.com/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/index.html">
+<meta property="og:title" content="基于Q学习的卫星网络故障恢复路由">
+<meta property="og:url" content="http://example.com/2021/06/24/SAGIN/Recovery%20Routing%20Based%20on%20Q-Learning%20for%20Satellite%20Network%20Faults/index.html">
 <meta property="og:site_name" content="CalebLogin的博客">
-<meta property="og:description" content="论文引用    论文编号 论文名称     12 A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw.,">
+<meta property="og:description" content="论文引用    论文编号 论文名称     10    11    12    13    28      意义   As the backbone network of the space and terrestrial network, the timely detection and restoration of communication capabilities of satellit">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-21T10:08:16.000Z">
-<meta property="article:modified_time" content="2021-06-24T06:17:10.963Z">
+<meta property="article:published_time" content="2021-06-24T06:19:41.000Z">
+<meta property="article:modified_time" content="2021-06-24T06:26:17.642Z">
 <meta property="article:author" content="CalebLogin">
-<meta property="article:tag" content="故障恢复">
-<meta property="article:tag" content="主动故障恢复">
 <meta property="article:tag" content="链路故障恢复">
 <meta property="article:tag" content="被动故障恢复">
+<meta property="article:tag" content="卫星网络">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/">
+<link rel="canonical" href="http://example.com/2021/06/24/SAGIN/Recovery%20Routing%20Based%20on%20Q-Learning%20for%20Satellite%20Network%20Faults/">
 
 
 <script id="page-configurations">
@@ -49,7 +48,7 @@
   };
 </script>
 
-  <title>Link Failure Recovery Mechanism in Software Defined Networks | CalebLogin的博客</title>
+  <title>基于Q学习的卫星网络故障恢复路由 | CalebLogin的博客</title>
   
 
 
@@ -159,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/24/SAGIN/Recovery%20Routing%20Based%20on%20Q-Learning%20for%20Satellite%20Network%20Faults/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -172,7 +171,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Link Failure Recovery Mechanism in Software Defined Networks
+          基于Q学习的卫星网络故障恢复路由
         </h1>
 
         <div class="post-meta">
@@ -181,16 +180,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-06-21 18:08:16" itemprop="dateCreated datePublished" datetime="2021-06-21T18:08:16+08:00">2021-06-21</time>
+              <time title="创建时间：2021-06-24 14:19:41 / 修改时间：14:26:17" itemprop="dateCreated datePublished" datetime="2021-06-24T14:19:41+08:00">2021-06-24</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 14:17:10" itemprop="dateModified" datetime="2021-06-24T14:17:10+08:00">2021-06-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -222,46 +215,86 @@
 </thead>
 <tbody>
 <tr>
-<td>12</td>
-<td>A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw., vol. 7, no. 2, p. A174, Feb. 2015</td>
-</tr>
-<tr>
-<td>8</td>
-<td>S. Sharma, D. Staessens, D. Colle, M. Pickavet, and P. Demeester, “Enabling fast failure recovery in OpenFlow networks,” in Proc. 8th Int. Workshop Design Reliable Commun. Netw. (DRCN), Oct. 2011, pp. 164–171</td>
-</tr>
-<tr>
 <td>10</td>
-<td>A. Capone, C. Cascone, A. Q. T. Nguyen, and B. Sanso, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. 11th Int. Conf. Design Reliable Commun. Netw. (DRCN), Mar. 2015, pp. 25–32</td>
+<td></td>
 </tr>
 <tr>
-<td>7</td>
-<td>X. Zhang, Z. Cheng, R. Lin, L. He, S. Yu, and H. Luo, “Local fast reroute with flow aggregation in software defined networks,” IEEE Commun. Lett., vol. 21, no. 4, pp. 785–788, Apr. 2017.</td>
+<td>11</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<hr />
-<span id="more"></span>
-<h4 id="notes"><a class="markdownIt-Anchor" href="#notes"></a> Notes:</h4>
-<ol>
-<li>该篇文章中利用FF组表来进行单一路径的恢复。</li>
-<li>FF组表被用来重定向一条流表，当这个活动桶受到链路故障的影响。</li>
-<li>链路恢复分为主动式和被动式，主动式是安装保护路径，不需要控制器的干预。被动式是当故障发生时，通过控制器来分配一条新的路径。</li>
-<li>在本文中，我们使用OpenFlow的内建组表特性来重新路由由于链路故障而中断的流。我们不是为所有现有流单独创建备份路径，而是计算相邻OpenFlow交换机之间最有效的备份路径。在这里，相邻交换机是指通过至少一条链路直接相互连接的交换机。控制器由一个查找表组成，其中填满了所有计算的备份路径。一旦连接在两个相邻的交换机之间发生故障，连接到中断的链路上的入口交换机立即将断开的链路要通过的所有流量合并起来，并用标识符对它们进行标记。然后，它们通过预先计算的路径被转发到断开链路另一端的交换机。同时，控制器通过查找表沿备份路径路径更新每个交换机的流表，方法是在匹配字段上输入一个标识符流条目。由于链路失效后使用的路径是预先计算的，控制器建立路由的时间非常短，明显比本地快速重路由机制快。还需要注意的是，与快速故障转移或保护机制不同，不会为单个源-目标对计算备份路径，这会导致相对较少的内存和最小的延迟。</li>
-<li>备份路径被计算在两种方法中：简单的混合整数线性规划和拥塞控制，由控制器更新在交换机。</li>
-<li>SDN网络的控制器出了安装和删除流项外，还具有更高的功能，如管理网络环境，更新拓扑映射，路径计算，网络对失效链路和交换机的响应等。</li>
-<li>本文中，提出GTR的技术中利用了交换机的这些功能，并与最先进的弹性技术相比，使用这些计算可以节省回复时间和内存。通过计算路由将所有包合并到一起重新路由，性能再次得到提高。对失效链路的入口和出口开关进行路由计算。</li>
-<li>控制器内的查找表维护所有相邻交换机的可能的组合。这包括网络中的所有活动链路和相应的备份路径，其中包括它所通过的交换机。</li>
-<li>链路失效阶段，入口交换机立刻将通过它的受影响的包标记上唯一性的标识符，这些包会通过之前计算好的备份路径进行转发。</li>
-<li>上述提到的这些活动都是通过在FF表中安装的的操作bucket完成的。</li>
-<li>一个OF 交换机有一个或多个包含流实体的流表，一个流实体有一组匹配域，相应的操作和一个计时器。还有特征组表，包含组实体。当流实体转发一个包通过组实体时，特征组表会执行。一个组实体包含三个组件，组标识符，组的类型和操作bucket。一个组实体根据它的类型有一个或多个操作bucket。
-<ol>
-<li>控制器和数据转发之间的通信由两种类型的包，packet-in 和 packet-out。任何一个OF交换机在收到一个包时，检查头部信息来与流表中的流实体进行对比，如果没有匹配成功，则将包发送给控制器（packet-in信息）。packet-out被控制器沿着数据路径，发送给邻近的控制器。</li>
-<li>控制器发送LLDP packet-out信息在发现发送间隔时间内，如果控制器在发现超时时间内没有收到packet-back信息，控制器断定属于自己的一条链路失败。</li>
-</ol>
+<h4 id="意义"><a class="markdownIt-Anchor" href="#意义"></a> 意义</h4>
+<ul>
+<li>
+<p>As the backbone network of the space and terrestrial network, the timely detection and restoration of communication capabilities of satellite net- work faults ensure the healthy and stable operation of the network</p>
 </li>
-<li>每当出现链接故障时，在入口开关处，所有受影响的流合并为单个流，并使用动作桶中提到的标识符进行标记。同时，控制器用流输入更新预先计划的路由上的交换机。流入口具有a)流在匹配字段被标记的特定标识符和b)它的动作，它指定了将流通过路由转发到断开链接的出口交换机的交换机。</li>
+<li>
+<p>首先说明了临时故障与持久故障之间的区别。空间中的带电粒子会围绕在天线的周围，会临时阻止信息的传输。太阳爆发活动产生的高能带电粒子会攻击卫星设备，造成卫星设备的不正常运行。</p>
+</li>
+<li>
+<p>其次，对于不同类型的故障，要采用不同方式的路由恢复方法。</p>
+</li>
+<li>
+<p>本文提出了一种新的低负载信息收集机制，收集分离在∆t时间内成功传输路径的相关信息，并计算出reachable.unreachable和unknown区域。在这个基础上，基于贝叶斯决策理论，当已知状态收到限制时，后验可能性指标表示不同故障类型的后验可能性。该后验可能性是通过不同故障类型的先验可能性来获得的。与最大化后验可能性指标不同，通过设置后验可能性的阈值，不同类型的故障链路结果能够输出，这样更适合易于故障的卫星网络。误判的结果还能够在第二阶段的测试中得到证实。与此同时，在基于强化学习的Q学习算法的基础上，提出了基础上述故障检测的故障恢复方法。收集到的信息被用来更新由一个二维状态空间和一位活动空间组成的Q值表。对于不同类型的故障，更新本地的状态空间和不同关联节点的活动空间来实现对不同故障类型来分别进行路由恢复的目的。因为奖励函数包括队列时间，传输时间和链路存活时间，权值因子也关联链路存活时间，所以可以有效的减少网络的动态性在路由结果的稳定性和路径连接稳定性上的影响。</p>
+</li>
+<li>
+<p>故障检测步骤：</p>
+</li>
+</ul>
+<ol>
+<li>决定两种故障类型的先验概率</li>
+<li>在t时间内收集成功传输数据的路径信息</li>
+<li>根据收集到的信息网络区域<br />
+(a) 节点报告未收到应收到的数据包，将相应路由结果上的节点添加到集合Si，根据传输方向以节点对的形式添加到Yi，故障链路被表示成pi (Si,Yi)<br />
+(b) 在t时间间隔内，通过正常传输的路径集M，收集成功发送和接受信息的链路，并根据传输方式以节点对的形式存入集合S<br />
+© 路径pi的终端发送阶段定义为初始节点nu，接收节点被定义为节点ne，可到达域R = {nu}，不可到达域 —R = {ne}，未知域U = 空集<br />
+(d) 对于P集合内的其他故障路径，如果初始节点相同，将接收节点存入-R，如果初始节点不同，跳到（6）<br />
+(e) 将可达区域R的边界节点与C中的链路进行比较。如果有一条链路在R中的节点与C中节点n之间，将n也加入可达区域R，重复这个步骤，直到没有这种节点为止。<br />
+(f) 剩余的节点加入未知区域U中，这样就构造了一个包含可达域，不可达域，未知域的故障检测模型。该模型以一条故障路径p1为例。模型构建步骤对每个失败路径都是重复的。应该注意的是，为了满足卫星网络的特殊需要，这种机制假设失败路径的接收端节点属于不可达的基于区域—R。这种假设与原始定义相比，会导致增加疑似错误链接，准确率可能会降低。但由于该机制由两个检测阶段组成，所以第二个阶段的检测将减少这一假设对机制整体性能的影响。</li>
+<li>使用贝叶斯公式计算每条链路故障类型的可能性</li>
+<li>确定故障链路是否存在</li>
+<li>根据阈值获得产生的故障链路结果</li>
+<li>判断故障概率</li>
+<li>在第一阶段进行故障类型的分类和判断，根据（4）计算的故障概率指数对故障链路进行初步故障类型判断</li>
+<li>执行第二阶段的故障类型判断
+<ul>
+<li>在这一阶段，我们利用卫星网络的拓扑变化特征以及拓扑变化后的新邻居节点或新通信节点对类型未知的故障链路进行进一步的故障类型检测。对于本文的研究对象极地轨道星座，星间链路可以分为无缝区链路和有缝区链路。对于无接缝区域链路，在拓扑变化后，可以使用新连接的地面站或新连接的卫星节点进行进一步的故障类型检测。对于接缝区的链路，可以直接使用拓扑变化后新的邻近节点进行进一步检测。</li>
+</ul>
+</li>
+<li>获得输出结果并且获得链路故障位置和类型
+<ul>
+<li>有两点需要注意：</li>
+<li>在步骤（3）有一个特殊情况，当只存在可达域和不可达域，不存在未知域时，步骤（4）的计算公式不能使用。这种情况意味着肯定存在至少一条链路一个端在可达域，另一个端在不可达域。这样的链路肯定是一条故障链路；否则这种情况是不存在的。这种情况直接被步骤（9）检测。</li>
+<li>在步骤（6）中，因为阈值决定结果，故障链路的结果包括正确的故障链路和被误判的正常链路。在步骤（9）的故障处理阶段，所有的故障链路都会被检测，并且故障端口被确定。误判的链路在这个阶段能够被有效的评估。</li>
+</ul>
+</li>
 </ol>
-<h4 id="summary"><a class="markdownIt-Anchor" href="#summary"></a> Summary:</h4>
+<h4 id="数学模型"><a class="markdownIt-Anchor" href="#数学模型"></a> 数学模型：</h4>
+<ul>
+<li>步骤：<br />
+（1）初始化每个节点的Q表<br />
+（2）卫星和地面节点交换管理信息和时间信息。地面站发送更新后的Q表、影响因子、学习率给每一个卫星节点，卫星节点接收到最新的q值表后，将各节点数据传输的排队时间tq发送给地面站，用于实时更新q值表。<br />
+（3）确定故障链路是否触发了故障检测机制，如果触发了，goto（4），如果没有goto（7）<br />
+（4）<br />
+（5）根据第二阶段的检测结果，更新Q值表<br />
+（6）组织故障情况，重新组织拓扑，goto（1）<br />
+（7）当网络正常运行的时候，根据公式更新Q值表。<br />
+（8）确定网络拓扑是否已经改变。在卫星网络正常操作阶段，因为卫星间链路的切换导致拓扑的改变。如果链路发生切换导致网络拓扑的改变，goto（9），否则goto（2）<br />
+（9）将相关链路Q-transfer到链路转换所在节点。</li>
+</ul>
 
     </div>
 
@@ -271,10 +304,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 故障恢复</a>
-              <a href="/tags/%E4%B8%BB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 主动故障恢复</a>
               <a href="/tags/%E9%93%BE%E8%B7%AF%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 链路故障恢复</a>
               <a href="/tags/%E8%A2%AB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 被动故障恢复</a>
+              <a href="/tags/%E5%8D%AB%E6%98%9F%E7%BD%91%E7%BB%9C/" rel="tag"># 卫星网络</a>
           </div>
 
         
@@ -283,13 +315,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/21/SAGIN/A%20Proactive-Restoration%20Technique%20for%20SDNs/" rel="prev" title="A Proactive-Restoration Technique for SDNs">
-      <i class="fa fa-chevron-left"></i> A Proactive-Restoration Technique for SDNs
+    <a href="/2021/06/24/SAGIN/recovery-total/" rel="prev" title="故障恢复论文汇总">
+      <i class="fa fa-chevron-left"></i> 故障恢复论文汇总
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/06/21/SAGIN/Efficient%20Recovery%20Path%20Computation%20for%20Fast%20Reroute%20in%20Large-Scale%20Software-Defind%20Networks/" rel="next" title="在大型网络软件定义网络中使用快速重路由来进行有效的故障恢复路径计算">
-      在大型网络软件定义网络中使用快速重路由来进行有效的故障恢复路径计算 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -348,7 +377,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#notes"><span class="nav-number">2.</span> <span class="nav-text"> Notes:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#summary"><span class="nav-number">3.</span> <span class="nav-text"> Summary:</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%84%8F%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text"> 意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text"> 数学模型：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
