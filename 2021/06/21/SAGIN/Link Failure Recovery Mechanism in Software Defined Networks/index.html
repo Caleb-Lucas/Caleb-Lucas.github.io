@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="论文引用    论文编号 论文名称     12 A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw.,">
+  <meta name="description" content="论文引用    论文编号 论文名称     10 A. Capone, C. Cascone, A. Q. T. Nguyen, and B. Sanso, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. 11th Int. Conf. Design Reliable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Link Failure Recovery Mechanism in Software Defined Networks">
+<meta property="og:title" content="软件定义网络中的链路故障恢复机制">
 <meta property="og:url" content="http://example.com/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/index.html">
 <meta property="og:site_name" content="CalebLogin的博客">
-<meta property="og:description" content="论文引用    论文编号 论文名称     12 A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw.,">
+<meta property="og:description" content="论文引用    论文编号 论文名称     10 A. Capone, C. Cascone, A. Q. T. Nguyen, and B. Sanso, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. 11th Int. Conf. Design Reliable">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig2.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig3.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig4.png">
 <meta property="article:published_time" content="2021-06-21T10:08:16.000Z">
-<meta property="article:modified_time" content="2021-06-24T06:17:10.963Z">
+<meta property="article:modified_time" content="2021-06-24T11:16:13.101Z">
 <meta property="article:author" content="CalebLogin">
 <meta property="article:tag" content="故障恢复">
 <meta property="article:tag" content="主动故障恢复">
 <meta property="article:tag" content="链路故障恢复">
-<meta property="article:tag" content="被动故障恢复">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig2.png">
 
 <link rel="canonical" href="http://example.com/2021/06/21/SAGIN/Link%20Failure%20Recovery%20Mechanism%20in%20Software%20Defined%20Networks/">
 
@@ -49,7 +52,7 @@
   };
 </script>
 
-  <title>Link Failure Recovery Mechanism in Software Defined Networks | CalebLogin的博客</title>
+  <title>软件定义网络中的链路故障恢复机制 | CalebLogin的博客</title>
   
 
 
@@ -172,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Link Failure Recovery Mechanism in Software Defined Networks
+          软件定义网络中的链路故障恢复机制
         </h1>
 
         <div class="post-meta">
@@ -189,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 14:17:10" itemprop="dateModified" datetime="2021-06-24T14:17:10+08:00">2021-06-24</time>
+                <time title="修改时间：2021-06-24 19:16:13" itemprop="dateModified" datetime="2021-06-24T19:16:13+08:00">2021-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,46 +225,76 @@
 </thead>
 <tbody>
 <tr>
-<td>12</td>
-<td>A. Giorgetti, F. Paolucci, F. Cugini, and P. Castoldi, “Dynamic restora- tion with GMPLS and SDN control plane in elastic optical networks [Invited],” J. Opt. Commun. Netw., vol. 7, no. 2, p. A174, Feb. 2015</td>
-</tr>
-<tr>
-<td>8</td>
-<td>S. Sharma, D. Staessens, D. Colle, M. Pickavet, and P. Demeester, “Enabling fast failure recovery in OpenFlow networks,” in Proc. 8th Int. Workshop Design Reliable Commun. Netw. (DRCN), Oct. 2011, pp. 164–171</td>
-</tr>
-<tr>
 <td>10</td>
-<td>A. Capone, C. Cascone, A. Q. T. Nguyen, and B. Sanso, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. 11th Int. Conf. Design Reliable Commun. Netw. (DRCN), Mar. 2015, pp. 25–32</td>
+<td>A. Capone, C. Cascone, A. Q. T. Nguyen, and B. Sanso, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. 11th Int. Conf. Design Reliable Commun. Netw. (DRCN), Mar. 2015, pp. 25–32.</td>
 </tr>
 <tr>
 <td>7</td>
 <td>X. Zhang, Z. Cheng, R. Lin, L. He, S. Yu, and H. Luo, “Local fast reroute with flow aggregation in software defined networks,” IEEE Commun. Lett., vol. 21, no. 4, pp. 785–788, Apr. 2017.</td>
 </tr>
+<tr>
+<td>17</td>
+<td>C.-Y. Chu, K. Xi, M. Luo, and H. J. Chao, “Congestion-aware single link failure recovery in hybrid SDN networks,” in Proc. IEEE Conf. Comput. Commun. (INFOCOM), Apr. 2015, pp. 1086–1094</td>
+</tr>
+<tr>
+<td>20</td>
+<td>C. M. Duran, E. A. Leal, and J. F. Botero, “Improving fault tolerance in critical networks through OpenFlow,” in Proc. IEEE Colombian Conf. Commun. Comput. (COLCOM), Aug. 2017, pp. 1–6.</td>
+</tr>
+<tr>
+<td>21</td>
+<td>N. L. M. V. Adrichem, B. J. V. Asten, and F. A. Kuipers, “Fast recovery in software-defined networks,” in Proc. 3rd Eur. Workshop Softw. Defined Netw., Sep. 2014, pp. 61–66</td>
+</tr>
 </tbody>
 </table>
-<hr />
 <span id="more"></span>
-<h4 id="notes"><a class="markdownIt-Anchor" href="#notes"></a> Notes:</h4>
+<h4 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h4>
+<ul>
+<li>在传统网络中，由于链路故障，预先路由的数据包会被丢弃，导致大量数据丢失。可用保护和恢复等生存性技术在链路故障前后提供解决方案。但是，要添加到流表中的新流项增加了初始网络需求，导致每个交换机的内存需求增加。保存的数据不仅降低了网络速度，而且需要对条目进行重复处理。在本文中，我们提出了一种基于组表重路由(GTR)技术的新方案，通过OpenFlow提供的快速故障转移(FF)组表特性来查找单链路故障的响应。该方案为控制器和转发OpenFlow启用的交换机提供了相同的角色。这里，控制器维护一个查找表，查找表会根据网络结构的变化定期更新。此外，它必须同时更新与交换机的每个活动端口相对应的FF组表。控制器重新标记数据包并更新各自交换机上的流条目。</li>
+<li>OpenFlow交换机有一个或多个流表，其中包含多个流项，每个流项定义单个流及其关联的操作。除了流表，OpenFlow交换机中还有一个表，在OpenFlow 1.1版本中引入，称为组表[3]。它可以与流表项协作用于传入包上的一些集合函数。有不同类型的组表可用，可以分为两类:可选的和必需的。在本例中，我们使用FF组，这是一个可选组。这里提供了与不同端口相关联的多个操作桶的优点。因此，它被用于将受链路故障影响的流重定向到另一个端口。操作桶只在相关端口是“活动的”时执行，即端口是工作的。动作桶在组表中按优先顺序排列。当流项将数据包定向到组表项时，表中的第一个活动桶被实现为[3]。</li>
+<li>SDN网络中链路恢复的方法有很多种，大致可以分为保护和恢复两类。保护是一种主动的机制，在交换机中为所有现有流[4]、[5]的每一个可能的链路故障安装了备份路径。因此，这是一个快速的过程，因为控制器不必干预重路由进程[6]。与保护不同，修复是一种反应机制。一旦发生链路故障事件，控制器必须为所有受影响的流设置单个[7]或多个/不同的路径[5]、[8]。虽然这是一个耗时的过程，但它在内存和功耗方面比保护更有效。</li>
+<li>在本文中，我们使用OpenFlow的内建组表特性来重新路由由于链路故障而中断的流。我们不是为所有现有流单独创建备份路径，而是计算相邻OpenFlow交换机之间最有效的备份路径。在这里，相邻交换机是指通过至少一条链路直接相互连接的交换机。控制器由一个查找表组成，其中填满了所有计算的备份路径。一旦连接在两个相邻的交换机之间发生故障，连接到中断的链路上的入口交换机立即将断开的链路要通过的所有流量合并起来，并用标识符对它们进行标记。然后，它们通过预先计算的路径被转发到断开链路另一端的交换机。同时，控制器通过查找表沿备份路径更新每个交换机的流表，方法是在匹配字段上输入一个标识符流条目。由于链路失效后使用的路径是预先计算的，控制器建立路由的时间非常短，明显比本地快速重路由机制快。还需要注意的是，与快速故障转移或保护机制[9]不同，不会为单个源-目标对计算备份路径，这会导致相对较少的内存和最小的延迟。</li>
+</ul>
+<h4 id="相关研究"><a class="markdownIt-Anchor" href="#相关研究"></a> 相关研究</h4>
+<ul>
+<li>在可生存性SDN网络中，研究并实现了保护和恢复机制。在[10]中，当FF机制不能使用时，保护机制是重点。通过两种方法计算备份路径;简单的混合整数线性规划(MILP)和拥塞控制，由控制器更新在交换机。在链接失败时使用预先计算的备份路径。网络供应商有权管理转发规则以及自适应安装过程的规则。虽然它具有几乎即时恢复[11]和低包丢失的优点，但内存的高利用率增加了数据平面上的负载。类似地，在[12]中提出了柔性网格系统的恢复机制，使链路失效时的恢复时间最小。</li>
+<li>在[4]中提出了一种更新的OpenFlow体系结构，以提高链路的保护，从而提高基于以太网的网络的弹性。在没有流量控制[13]-[15]的情况下，可以减少链路故障的恢复时间。然而，由于缺少预定义的流量控制，使得该算法在高流量时效率低下。在故障恢复期间，可以使用Ryu控制器[16]功能管理高流量条件下的流管理。研究发现，在故障早期恢复方面，FF机制优于恢复机制。此外，还提出了切换机制以克服拥塞问题。在此机制中，延迟降低了控制器连续干预的代价。当预定义的任务已经存在时，控制器的每次干预都会在其自身上引入过量负载。</li>
+<li>在[17]中，提出的链路失效解决方案提供了避免拥塞的设计。与故障后最短路径计算和IP快速重路由相比，具有更好的性能。当链接失败时，选择正确的备份路径，以避免拥塞。在恢复机制中涉及的交换机数量较少。根据需求，可以方便地使用多个备份路径。虽然该方法对备份路径计算合理，但对链路失效识别和恢复时间没有重点关注。</li>
+<li>在[7]中，一种不同的机制来自于被称为局部快速重路由的恢复。与恢复不同的是，在这种技术中，所有受影响的流被聚合为单个流，并在链路故障[18]、[19]后通过控制器计算的路径转发到断开段的另一端。然而，对于较小的网络，该技术并没有显示出比恢复更好的效果。</li>
+<li>在[8]中，采用OpenFlow协议，提出了一种基于分割架构的恢复机制。在该体系结构中，通过切换机制简化了恢复机制，提高了恢复时间。合并了数据转发设备的开放管理接口，稍后用于实现恢复机制。该策略很重要，因为它包括了基于实时OpenFlow的SDN网络的实现和讨论</li>
+<li>[20]的作者提出了一种优化内存利用的算法，以保持网络运行的连续性。该算法使用预定义的参数设置流，以提高网络在故障情况下的性能。使用FF组和S组管理流项，以响应容错。它需要创建定义网络中的边缘的结构，并将它们分组到树中，以定义所有源-目标对之间的前向和后向路径。</li>
+<li>在[21]中解释了以更小的复杂性处理网络故障的方法。在这里，在会话中检测每个链接上的流。与保护和恢复方案相比，故障转移方案处理链路故障的恢复时间更短。实验工作在各种不同的拓扑上进行测试，以便从任何故障中恢复。实验工作并没有阐明控制器的干预和它在执行故障检测和恢复指令方面的作用。</li>
+<li>很明显，上述的研究工作忽略了控制器在SDN网络中的功能。控制器除了安装和删除流项外，还具有更高的功能，如管理网络环境、更新拓扑映射、路径计算、网络对失效链路和交换机的响应等。在本文中，我们在提出的GTR技术中利用了这些功能，并与最先进的弹性技术相比，使用这些功能来节省恢复时间和内存。此外，通过计算路由将所有包合并到一起重新路由，性能再次得到提高。对失效链路的入口和出口交换机进行路由计算。</li>
+</ul>
+<h4 id="提出的算法"><a class="markdownIt-Anchor" href="#提出的算法"></a> 提出的算法</h4>
+<ul>
+<li>控制器中的查找表维护所有相邻交换机的可能组合。这包括网络中所有的活动链路和相应的备份路径，备份路径包括它所经过的交换机。当链路发生故障时，与它相连的入接口交换机会立即对经过的受影响的报文进行唯一标识。然后，报文通过预先计算的路径往回转发。上面提到的所有事件都是通过FF组表中安装的操作bucket完成的。同时，控制器将流项连同它在匹配字段上的标识符安装到备份路径的交换机中。该方法比恢复技术更快，因为所有的数据包都通过预先计算的路径，忽略了单个数据包的重路由。与保护机制不同，备份路径是在流量最小的网络中失败链路的交换机之间计算的。</li>
+<li>flood消息在网络中循环，用于拓扑发现。在支持OpenFlow的网络中，控制包不断地进出交换机和主机。传入的数据包通过OpenFlow洪泛端口分发到所有物理端口，除了那些被生成树协议(STP)禁用的端口。以太网使用STP来构建网络的逻辑拓扑。它在将网络拓扑转换为逻辑树的过程中有效地避免了循环和桥接。SDN控制器通过抽象创建物理拓扑的逻辑表示。物理拓扑包括许多链路(或边)、每个交换机的连接模式及其在网络中的位置。当实现是主要因素时，将执行此操作的链接层发现协议(LLDP)。在拓扑发现协议的帮助下，通过比较故障后拓扑与逻辑表示[22]-[24]，可以很容易地发现网络中的链路故障。</li>
+</ul>
 <ol>
-<li>该篇文章中利用FF组表来进行单一路径的恢复。</li>
-<li>FF组表被用来重定向一条流表，当这个活动桶受到链路故障的影响。</li>
-<li>链路恢复分为主动式和被动式，主动式是安装保护路径，不需要控制器的干预。被动式是当故障发生时，通过控制器来分配一条新的路径。</li>
-<li>在本文中，我们使用OpenFlow的内建组表特性来重新路由由于链路故障而中断的流。我们不是为所有现有流单独创建备份路径，而是计算相邻OpenFlow交换机之间最有效的备份路径。在这里，相邻交换机是指通过至少一条链路直接相互连接的交换机。控制器由一个查找表组成，其中填满了所有计算的备份路径。一旦连接在两个相邻的交换机之间发生故障，连接到中断的链路上的入口交换机立即将断开的链路要通过的所有流量合并起来，并用标识符对它们进行标记。然后，它们通过预先计算的路径被转发到断开链路另一端的交换机。同时，控制器通过查找表沿备份路径路径更新每个交换机的流表，方法是在匹配字段上输入一个标识符流条目。由于链路失效后使用的路径是预先计算的，控制器建立路由的时间非常短，明显比本地快速重路由机制快。还需要注意的是，与快速故障转移或保护机制不同，不会为单个源-目标对计算备份路径，这会导致相对较少的内存和最小的延迟。</li>
-<li>备份路径被计算在两种方法中：简单的混合整数线性规划和拥塞控制，由控制器更新在交换机。</li>
-<li>SDN网络的控制器出了安装和删除流项外，还具有更高的功能，如管理网络环境，更新拓扑映射，路径计算，网络对失效链路和交换机的响应等。</li>
-<li>本文中，提出GTR的技术中利用了交换机的这些功能，并与最先进的弹性技术相比，使用这些计算可以节省回复时间和内存。通过计算路由将所有包合并到一起重新路由，性能再次得到提高。对失效链路的入口和出口开关进行路由计算。</li>
-<li>控制器内的查找表维护所有相邻交换机的可能的组合。这包括网络中的所有活动链路和相应的备份路径，其中包括它所通过的交换机。</li>
-<li>链路失效阶段，入口交换机立刻将通过它的受影响的包标记上唯一性的标识符，这些包会通过之前计算好的备份路径进行转发。</li>
-<li>上述提到的这些活动都是通过在FF表中安装的的操作bucket完成的。</li>
+<li><strong>网络架构</strong><br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig2.png" alt="fig2" /></li>
+</ol>
+<ul>
 <li>一个OF 交换机有一个或多个包含流实体的流表，一个流实体有一组匹配域，相应的操作和一个计时器。还有特征组表，包含组实体。当流实体转发一个包通过组实体时，特征组表会执行。一个组实体包含三个组件，组标识符，组的类型和操作bucket。一个组实体根据它的类型有一个或多个操作bucket。
 <ol>
 <li>控制器和数据转发之间的通信由两种类型的包，packet-in 和 packet-out。任何一个OF交换机在收到一个包时，检查头部信息来与流表中的流实体进行对比，如果没有匹配成功，则将包发送给控制器（packet-in信息）。packet-out被控制器沿着数据路径，发送给邻近的控制器。</li>
 <li>控制器发送LLDP packet-out信息在发现发送间隔时间内，如果控制器在发现超时时间内没有收到packet-back信息，控制器断定属于自己的一条链路失败。</li>
 </ol>
 </li>
-<li>每当出现链接故障时，在入口开关处，所有受影响的流合并为单个流，并使用动作桶中提到的标识符进行标记。同时，控制器用流输入更新预先计划的路由上的交换机。流入口具有a)流在匹配字段被标记的特定标识符和b)它的动作，它指定了将流通过路由转发到断开链接的出口交换机的交换机。</li>
+<li>在这里，我们提出了一种机制，它要求控制器和数据平面设备在链路故障发生之前和之后采取行动。控制器与数据平面设备之间通过OpenFlow协议实现TLS (Transport Layer Security)通信。图2所示的网络结构包含三个OpenFlow交换机。OvSs (OpenFlow-v-Switches)/ OF交换机的名称分别为OvS1、OvS2和OvS3。OvS1与OvS2通过e12边连接，OvS2与OvS3通过e23边连接，OvS3与OvS1通过e31边连接。为了更好地理解，OpenFlow交换机的内部结构以OvS2的扩展形式显示。它有一个或多个包含流条目的流表。流条目有一组匹配字段、与它们相关联的操作和一个计数器，用于跟踪特定流的数据包数量。匹配字段集合包含了数据包的头信息。动作可能是将数据包转发到某个端口或组入口或控制器，或简单地丢弃数据包。</li>
+<li>组表的另一个特性是，当一个流表开始通过组表转发数据包时，它的组表项被执行。组表项由组标识符、组类型和动作桶三部分组成。一个组条目可能有一个或多个动作桶，这取决于它的类型。每个快速故障切换组条目都有与交换机的不同端口相关联的动作桶。动作桶按优先次序由高到低排列。当与一个动作桶关联的端口不是“活动的”，即非活动的，那么这个动作桶也被认为不是“活动的”。组条目中的第一个“活动”动作桶被考虑执行。</li>
+<li>为了对网络中的任何更改作出响应，控制器首先识别所发生的更改。检测到断开的链路，类似于链路发现。控制器和数据转发交换机之间有两种类型的数据包，即“packet-in”和“packet-out”。任何一个OpenFlow交换机在接收到一个数据包时都会检查头是否与流表中的流条目匹配。如果没有匹配到，则交换机将数据包发送给控制器。这就是所谓的“packet-in”消息。“packet-out”消息由控制器发送到交换机，该交换机将通过数据路径转发到相邻的交换机。对于链路发现和链路故障，控制器通过“packet-out”报文[25]向其控制下的交换机发送LLDP报文。当交换机收到一个“packet-out”消息时，它通过控制器命令的端口将其转发到相邻的交换机。当相邻的交换机收到这个包时，它将这个包作为“packet-in”消息转发给控制器，因为在交换机的流条目中没有匹配的。控制器因此记录了两个交换机之间的路径和它们所连接的端口。在链路发现的过程中，控制器在一段时间(发现发送间隔)后发送LLDP“packet-out”消息。如果控制器在一个称为“发现超时”的时间间隔后没有收到以“packet-in”的形式返回的数据包，则它假定相应的链路崩溃[8]。因此，这种持续的失败检查可以防止数据包丢失。SDN网络容易出现链路故障。因此，一旦发现链接被折叠，恢复机制就会发生。该机制的工作流程在第三- b节中进行了说明。说明了该方法对链路故障的检测和恢复。</li>
+</ul>
+<ol start="2">
+<li><strong>工作流程</strong></li>
 </ol>
-<h4 id="summary"><a class="markdownIt-Anchor" href="#summary"></a> Summary:</h4>
+<ul>
+<li>在链路中断之前的动作需要快速故障转移组表中对应于交换机中每个活动端口的最新更新项。同时，控制器上的查找表也将被更新。**这个过程必须周期性地重复，以便根据网络拓扑和流量的变化更新FF组表和查询表。**此过程的流程图如图3所示。<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig3.png" alt="fig3" /></li>
+<li>路径计算模块考虑网络拓扑，排除相邻两台交换机之间存在的链路，计算相邻两台交换机之间的备份路径。在本文介绍的SDN场景中，单个组条目被称为多个流条目。因此，通过同一个端口转发的不同流现在可以使用同一个FF组表项。与组条目相关联的操作桶按优先级顺序排列。因此，当第一个动作桶是“活动的”时，它将数据包转发到指定的端口。当端口失效时，即发生链路故障时，执行组表项中的下一个动作桶。这个动作桶首先用一个特定的标识符对数据包进行标记，然后通过动作桶中的指定端口转发数据包，从而进一步将数据包引向备份路径。如图4所示，源-目的对s1−d1、s2−d2和s3−d3之间的流从同一个端口p1转发。按照同样的方式，源-目的对s4−d4和s5−d5之间的流必须通过同一个端口p2转发。它们不是直接通过各自的端口转发，而是直接转发到FF组条目g1和g2，因此当端口p1和p2出现故障时，它们将在适当的标签后立即转发到p3和p4。</li>
+<li>无论何时出现链路故障，在入口交换机上，所有受影响的流都被合并为单个流，并使用动作桶中提到的标识符进行标记。同时，控制器通过流入口更新已规划路由上的交换机。流表项有a)流在匹配字段上被标记的特定标识符，b)它的动作，指定交换机将流通过路由转发到断开链路的出口交换机。<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/lfrmisdn/fig4.png" alt="fig4" /></li>
+</ul>
 
     </div>
 
@@ -274,7 +307,6 @@
               <a href="/tags/%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 故障恢复</a>
               <a href="/tags/%E4%B8%BB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 主动故障恢复</a>
               <a href="/tags/%E9%93%BE%E8%B7%AF%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 链路故障恢复</a>
-              <a href="/tags/%E8%A2%AB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 被动故障恢复</a>
           </div>
 
         
@@ -283,8 +315,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/21/SAGIN/A%20Proactive-Restoration%20Technique%20for%20SDNs/" rel="prev" title="A Proactive-Restoration Technique for SDNs">
-      <i class="fa fa-chevron-left"></i> A Proactive-Restoration Technique for SDNs
+    <a href="/2021/06/21/SAGIN/A%20Proactive-Restoration%20Technique%20for%20SDNs/" rel="prev" title="对于SDN架构的主动恢复技术">
+      <i class="fa fa-chevron-left"></i> 对于SDN架构的主动恢复技术
     </a></div>
       <div class="post-nav-item">
     <a href="/2021/06/21/SAGIN/Efficient%20Recovery%20Path%20Computation%20for%20Fast%20Reroute%20in%20Large-Scale%20Software-Defind%20Networks/" rel="next" title="在大型网络软件定义网络中使用快速重路由来进行有效的故障恢复路径计算">
@@ -348,7 +380,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#notes"><span class="nav-number">2.</span> <span class="nav-text"> Notes:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#summary"><span class="nav-number">3.</span> <span class="nav-text"> Summary:</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="nav-number">3.</span> <span class="nav-text"> 相关研究</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%87%BA%E7%9A%84%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text"> 提出的算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -362,7 +394,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

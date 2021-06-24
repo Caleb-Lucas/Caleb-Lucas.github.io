@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="论文引用    论文编号 论文名称     16 S. A. Astaneh and S. S. Heydari, ‘‘Optimization ofSDN flow operations in multi-failure restoration scenarios,’’ IEEE Trans. Netw. Service Manage., vol. 13, no. 3, pp. 421–432">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件定义网络的快速恢复优化方法">
+<meta property="og:url" content="http://example.com/2021/06/24/SAGIN/Optimisation%20Methods%20for%20Fast%20Restoration%20of%20Software-Defined%20Networks/index.html">
+<meta property="og:site_name" content="CalebLogin的博客">
+<meta property="og:description" content="论文引用    论文编号 论文名称     16 S. A. Astaneh and S. S. Heydari, ‘‘Optimization ofSDN flow operations in multi-failure restoration scenarios,’’ IEEE Trans. Netw. Service Manage., vol. 13, no. 3, pp. 421–432">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/table1.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/fig1.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/fig2.png">
+<meta property="article:published_time" content="2021-06-24T11:07:06.000Z">
+<meta property="article:modified_time" content="2021-06-24T13:29:21.483Z">
+<meta property="article:author" content="CalebLogin">
+<meta property="article:tag" content="SDN">
+<meta property="article:tag" content="链路故障恢复">
+<meta property="article:tag" content="被动故障恢复">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/table1.png">
+
+<link rel="canonical" href="http://example.com/2021/06/24/SAGIN/Optimisation%20Methods%20for%20Fast%20Restoration%20of%20Software-Defined%20Networks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件定义网络的快速恢复优化方法 | CalebLogin的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalebLogin的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">CalebLogin's blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/24/SAGIN/Optimisation%20Methods%20for%20Fast%20Restoration%20of%20Software-Defined%20Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CalebLogin">
+      <meta itemprop="description" content="Talk is cheap, show me the code">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalebLogin的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件定义网络的快速恢复优化方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-24 19:07:06 / 修改时间：21:29:21" itemprop="dateCreated datePublished" datetime="2021-06-24T19:07:06+08:00">2021-06-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SAGIN/" itemprop="url" rel="index"><span itemprop="name">SAGIN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="论文引用"><a class="markdownIt-Anchor" href="#论文引用"></a> 论文引用</h4>
+<table>
+<thead>
+<tr>
+<th>论文编号</th>
+<th>论文名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>S. A. Astaneh and S. S. Heydari, ‘‘Optimization ofSDN flow operations in multi-failure restoration scenarios,’’ IEEE Trans. Netw. Service Manage., vol. 13, no. 3, pp. 421–432, Sep. 2016.</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Z. Wang,‘‘On the complexity of quality of service routing,’’ Inf. Process. Lett., vol. 69, no. 3, pp. 111–114, 1999.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h4 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h4>
+<ul>
+<li>日益复杂的现代网络应用和对互联网资源的巨大需求重新引发了人们对底层网络基础设施及其应对这种复杂性和适应业务应用需求的能力的兴趣和关注。特别是在这样的应用程序需要高度的健壮性和可靠性时。因此，软件定义的网络已经成为定义网络体系结构的一种有前途的方法，这种网络体系结构具有高度的适应性和健壮性，使人联想起未来的Internet。容错和网络更新被认为是阻碍该领域软件定义网络发展的两个当前研究挑战。因此，本文代表了在单链路失效的情况下解决这两个问题的一个步骤。我们的主要贡献在于定义了新的算法，这些算法旨在增强在大规模网络中以最小成本和时间更新因子寻找备选路径的问题。新的解决方案旨在提高流程运行效率，减少环节故障。我们评估我们的框架，并展示其实现如何提高效率。</li>
+<li>最近出现的软件定义网络(SDN)范式由于其在简化计算机网络管理和控制方面的潜力而引起了广泛的兴趣。在SDN网络中，与传统网络不同的是，控制平面从网络转发单元移动到称为控制器的中央控制层。控制平面和数据平面之间的解耦导致哑转发单元，其包转发行为由控制器决定。因此，SDN提供了创建可编程网络的能力，这种网络可以像任何其他计算设备一样进行管理。到目前为止，OpenFlow[1]是SDN控制器使用转发规则指导数据平面元素最常用的协议。这些好处的SDN范例意味着SDN现在采用的许多众所周知的开创性像德国电信公司,谷歌,微软,版本——izon,思科,最近2011年联合推出的开放网络基础(ONF)[2]作为一个非营利性的联盟,旨在加快SDN技术的采用。</li>
+<li>虽然sdn带来了许多网络改进的优点，但这种创新也伴随着一些挑战，如网络故障的管理、网络架构的更新和状态[3]、[4]的监控。一方面，有些问题与控制平面有关，比如更新拓扑所需的时间。另一方面，其他问题可能会影响数据平面，例如将控制器规则存储在转发元素中的流表的容量。此外，还有一些问题可能会影响这两个平面，例如故障发生。</li>
+<li>故障的发生通常导致必须进行许多更改，以屏蔽故障并保持网络正常运行。由于SDN控制器具有对网络拓扑状态的全局视图，所以它可以采用两种机制来处理数据平面故障:主动(保护)机制和被动(恢复)机制[4]。在保护机制中，OpenFlow控制器1提前计算备选路径(称为备份路径)，并在故障事件发生之前将这些路径的转发规则安装到转发元素中。因此，这种技术主动地掩盖了失败。另一方面，当控制器在故障时刻为备选路径安装适当的规则时，恢复机制就会反应性地发挥作用。这两种技术都有其优缺点，稍后将对此进行描述。</li>
+<li>为了保证网络的正确性，更新网络的问题可以看作是一个多方面的问题，因为它在许多网络活动中起着至关重要的作用。由于链路/节点故障、安全策略管理和流量工程[5]等原因，转发元素流表的流项(规则)通常需要重新配置。在更新的过程中需要考虑延迟、一致性和拥塞等方面的问题，因为这些会对网络的服务质量(QoS)造成负面影响。例如，在链路/节点故障的情况下，更新慢会增加丢包率。控制器可以远程放置，但可能不会直接连接到属于其域[6]的交换机，这使得更新操作更加关键。为了减少网络更新的过程持续时间，加快大规模网络中链路故障的恢复速度，我们将在本文提出的容错框架内提出、实施并评估两种新的方法，以寻找此类问题的最优解决方案。</li>
+</ul>
+<h4 id="相关研究"><a class="markdownIt-Anchor" href="#相关研究"></a> 相关研究</h4>
+<ul>
+<li>链接失效问题在大型网络中经常发生，因此从故障中恢复的话题并不是一个新的话题，已有相当数量的文献发表在这方面。虽然SDN体系结构作为一种动态和灵活的回答出现在更传统的，但静态和刚性的网络体系结构，这一领域的更多研究是必要的。我们在这里讨论一些我们认为与我们的方法和结果直接相关的最近的工作。</li>
+<li>在[7]中，作者展示了如何通过实现一个OpenFlow监控功能来实现快速的数据平面恢复。在同样的背景下，作者在[8]中定义了基于openflow的分段保护(OSP)方案作为一种数据平面保护方法。解决这个问题的主动机制是昂贵的，特别是对于大型网络，因为需要存储额外的规则作为备份。由于三元内容寻址内存(TCAM)的限制，目前市场上的OpenFlow设备只能存储多达8000个流条目，而三元内容寻址内存的成本很高。与此相反，许多属性的安装将影响数据平面中转发元素的匹配-操作过程。此外，也不能保证预先安装或预先规划的路径是无故障的，换句话说，备份路径可能比主路径更早失效。</li>
+<li>在[10]和[11]中，作者介绍了OpenFlow网络的快速恢复方法。在这两项工作中，方法的测试是在不超过6到14个节点的小规模网络拓扑基础上进行的。处理时间没有被考虑在内，这是sdn中从受影响的主路径重新路由到备选路径(通常由控制器计算)的要求。尽管当前OpenFlow交换机的性能因其供应商而异，但在[12]中，作者报告说，插入单个流条目所需的时间范围从0.5ms到10ms不等。因此，插入规则所需的时间是不可忽视的，尤其是从路径失败的角度来看，因为在失败的时刻，我们不仅关注新的流规则插入，而且还关注旧的无效规则的移除。在[13]中，每个规则修改都需要11ms(至少)的时间;即由插入和删除操作引起的延迟。因此，与保护机制相比，恢复机制需要相当长的时间。总的来说，在[11]50ms的大规模网络中很难获得完整的数据平面恢复，而在[4]中，作者指出在200ms到300ms之间的时延更现实。</li>
+<li>有些工作利用不相交路径原理从故障中恢复。例如，CORONET[14]是SDN容错系统，能够处理多种链路故障场景。用于大型OpenFlow网络系统的自适应多路径计算框架(ADMPCF)[15]是作为sdn的另一个流量工程工具开发的，它可以容纳两条或多条不相交的路径，以便在发生某些网络事件(例如链路故障)时使用。因此，当链路/节点发生故障或定义的代价函数没有达到其可接受的极限时，可以使用这些预先计算的路径作为备份。上述两项工作都是在故障事件发生前的早期阶段计算路径，为了确保路径的有效性，进行了不相交路径选择过程，以最大限度地提高备选路径的可靠性。换句话说，ADMPCF和CORONET的行为都是反应性的，也就是说，控制器总是会从一组已经计算好的路径中找到一条路径来选择，而不需要通过拓扑进行实时搜索来找到另一条路径并解决故障问题。这是一个积极的方面，有助于减少延迟，特别是当时间是加速恢复过程的一个重要因素时，尽管这种贡献并不显著。</li>
+<li>与前面提到的作品不同，[16]的作者处理的问题是减少备份路径的操作数量。他们表明，他们的算法可以最小化端到端计算所需的操作，以掩盖高达50%的失败。然而，缺少关于如何实现模拟环境的细节，以及如何得出这样的估计。[16]方法的另一个主要缺点是它不能保证备选路径的序列链;我们的意思是，节点的排序是重要的，而仅仅基于公共节点的存在来选择备选路径可能并不总是有效。作者还提出了一个阈值特性，可以最小化结果路径的集合，然而，这种特性并不总是保证端到端路径的可行性。最后，作者利用欧洲参考网络(ER_Net) 2[17]作为一个真实世界的拓扑实例进行了实验。我们注意到[16]和[19]在他们使用的拓扑中有一个错误，因为它包含了56条链接，而不是原来的拓扑[17]中的57条，这促使我们进一步调查在SDN容错研究这一领域所做的工作。</li>
+<li>综上所述，以前的研究提出了不同的方法、技术和工具来解决故障事件中数据平面恢复的问题。由于TCAM空间耗尽，保护技术并不理想，而延迟问题是现有恢复方法的一个主要缺点，因为控制器必须在尽可能短的时间内更新失败的路由。因此，修复机制仍然需要更多的调查和优化。在本文中，我们将从不同的角度来解决恢复问题，**通过利用已经安装的流入口来加速恢复过程。**这种方法解决了在最短时间内找到可能不太理想的解决方案的需求(例如在网络故障频繁的恶劣环境中)，而不是花费很长时间产生最佳解决方案。</li>
+</ul>
+<h4 id="问题陈述和工作总结"><a class="markdownIt-Anchor" href="#问题陈述和工作总结"></a> 问题陈述和工作总结</h4>
+<ul>
+<li>如前所述，容错是目前SDN技术面临的一个严重问题，为了解决这个问题，已经提出了几种方法。但是，除了[16]中描述的工作(它有一些缺陷)之外，这些工作都没有考虑到如何在更新SDN的受影响区域时减少所需的操作数量的问题。我们认为，在提高SDN容错流程的效率方面还有很大的改进空间。在这方面，我们的目标是制定和实现一个解决方案，<strong>在SDN模拟环境中合并操作的数量来寻找替代解决方案的问题</strong>。此外，由于最短路径在故障恢复场景中的重要作用，我们将重新讨论寻找最短路径的问题。</li>
+<li><strong>由于SDN本质上是一个集中式的网络体系结构，它的中心点(控制器)的主要职责之一是维护其域上所有节点的路由表。网络转发元件可能在恶劣和偏远的环境中运行，例如不可靠的无线传感器网络，在这些环境中故障率很高。这会导致网络拓扑结构频繁变化，转发节点[20]的路由表也会发生变化。在这样的环境中，高效的重新路由以尽快掩盖故障比寻找最佳和最优的解决方案更可取，考虑到解决方案的生命周期可能不够长，不足以证明其发现和安装成本，从时间方面来说，这可能是昂贵的。</strong></li>
+<li>记住上面的内容，我们可以总结：</li>
+</ul>
+<ol>
+<li>网络模型:基于无向图和集合理论，我们定义了一种新的解决SDN链路故障的模型。我们在算法中使用该模型以最优的方式找到路径，即需要最小的发现时间和控制器的流量输入修改操作。</li>
+<li>算法:我们提出了两种新的算法来实现新创建的SDN网络故障模型。这些算法划分一个失败的路径，以优化找到一个备选路径的问题。我们的新路径选择算法被纳入到提出的框架中，这将在后面描述。</li>
+<li>仿真:我们使用知名的仿真工具对新提出的算法进行仿真。仿真结果表明，所提出的模型和算法提高了在一组可能路径中快速找到备选路径的性能，从而提高了故障恢复的过程。</li>
+</ol>
+<h4 id="网络模型"><a class="markdownIt-Anchor" href="#网络模型"></a> 网络模型</h4>
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/table1.png" alt="table1" />
+- 为了定义一个准确的网络拓扑模型，我们选择了无向图作为建立模型的基础。一般来说，每个简单的图$G = (V, E)$由一组顶点V和一组边E组成，这些边把这些顶点连接起来。图中所有边的集合可以定义为顶点的2元子集$E \in V * V$.
+- 在$G$的基础上，我们将路径P定义为代表网络中节点或路由器的连续顶点序列。路径从源路由器$r_{s}$开始，以目的路由器$r_{d}$结束，$r_{j}$是$P$中的任意路由器:
+$$P = (rs, . . . , rj, . . . , rd)$$
+- 在路径长度为偶数的情况下，中点表示由两个中间节点组成的集合;或者在路径长度为奇数的情况下，只有一个中间节点。我们考虑一条长度为2的路径有一个空的中点集。
+- 上面的中点定义使用了偏函数Next，定义在一般序列(a1， . .， an)如下:$Next((a_{1},..., a_{i}, a_{i+1},..., a_{n}),a_{i})=a_{i+1}$ for any $i \in$ (1,...,n−1) and where $Next((a_{1},..., a_{i}, a_{i+1},..., a_{n}),a_{n})$ is undefined
+- 根据Next,我们可以定义第一和第二部分集潜在路径相对于有些路由器$r_{j}\in P$，$P$我们定义$Below$偏函数来表示路径的第一部分,$Above$偏函数来表示的路径的第二部分,如下:
+$$Below(P, r_{j}) = \{r_{s},..., Prev(P, r_{j})\}$$
+$$Above(P, r_{j}) = \{Next(P, r_{j}),...,r_{d}\}$$
+$$F_{r_{j}}=\left\{
+\begin{align*}
+(r_{j}, Next(P, r_{j})),r_{j} \ne r_{d}\\
+(Prev(P, r_{j}), r_{j}),  r_{j} \ne r_{s} \\
+\end{align*}
+\right.
+$$
+- 这个定义反映了关于节点rj的两种情况下的故障。第一种情况是当故障发生在rj之后的节点上时，第二种情况是当故障发生在rj之前的节点上时。如果rj是源节点或目标节点，它将缩小选择范围，只选择这两种情况中的一种
+我们使用最长最短路径的形式作为在我们的网络拓扑中应用Dijkstra算法[21]来寻找网络中每个可能的两个节点之间的最短路径所返回的一组解中有最大跳数的路径。为了找到这个最长最短路径，我们定义特殊函数LS如下
+- D的实际定义取决于Dijkstra算法的实现。我们对最长最短路径的情况特别感兴趣，因为就更新流条目的成本而言，它代表了最坏的情况，因为控制器必须处理最多数量的规则修改。每一个基于dijkstra的路径，它将比最长最短路径更短，这样的修改操作自然会更少。
+1. **路径和操作代价**
+- 在网络系统中，数据可以通过一条路径(称为单播)从源传播到目标，也可以通过多条路径。在我们在整个工作中采用的单路径场景中，网络的数据包通过一个唯一的路径路由，该路径应该满足一些预定义的QoS度量。可行路径(例如最短路径)通常是基于三个QoS度量类别中的一个构成的:加法、乘法或凹度量 `[22]` 。加性度量是构成路径p的所有边的特征之和的结果，跳数是加性度量的一个例子，本文采用了这个例子。在乘法度量中，结果是由一个特定路径的所有边缘特征的乘法计算出来的，例如与可靠性和无错误传输相关的特征。最后，凹度量捕获路径的特征，其中所有单独的链接都有一些最大/最小约束，例如带宽限制。
+- 从SDN的角度来看，控制器不仅负责将流项推入数据平面转发元素，还负责寻找合适的路径作为规则插入阶段的推进步骤。一旦一个新的数据包到达网络，接收数据包的第一个节点将向控制器询问对于接收到的数据包应该采取什么行动，这通常是转发或丢弃数据包。通过依赖网络拓扑的全局视图，控制器将确定传入数据包的最优路径，并沿着计算出的路径发送正确的流条目。因此，这里必须区分查找路径所需的时间和安装流入口所需的时间。目前大多数SDN控制器(例如POX控制器[23])使用经典算法如$Dijkstra$算法来解决寻找最短路径的问题。$Dijkstra$等最短路径算法的时间复杂度随着$(V × E)$的增大而增大。根据[24]，图中的搜索问题可以表示为一个雪球，当$r_{s}$和$r_{d}$之间的长度扩大时，雪球的大小就会增加。
+- 通常，路径的安装规则与一个通常称为Timeout[25]的生命周期相关联。每个特定的流条目将在其Timeout值过期时被自动擦除，然而，在某些事件(例如链接失败)中，控制器将需要删除一些规则，而无需等待其Timeout的过期。在这两种情况下，此类操作的成本(即添加和删除流条目)将由网络控制器支付。
+2. **路径分割**
+- 前面提到的一些工作使用了不相交路径的技术作为备份。在这种情况下，控制器首先需要删除受影响路径中的整个旧流条目，然后为替代路径安装所有新规则。这种情况可能代价很高，特别是当受影响的路径长度很长时。具体地说，我们将网络路径的解剖描述为从$r_{s}$到$r_{d}$的连接，如图1所示。
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/fig1.png" alt="fig1" />
+- 这个相邻路由器或节点的序列将有一些中间的路由器，我们称之为$M$，通过它，路径可以被分成两半。寻找从$r_{s}$到$r_{d}$的全新路径来避免失败可能不是一个明智的解决方案，因为更新操作的成本可能很高。因此，我们在我们的第一个算法中提出，当其中一个需要时，$M$点被用来产生两个部分(即子路径)。这意味着受影响的路径的一半仍然可以继续使用，更新这一半的操作成本应该为零，因为之前安装的所有规则都应该保持不变。在这种情况下，我们搜索的是另一个子路径，而不是完整路径，这意味着解剖将导致更小的搜索空间和更短的规则更新时间。因此，本文在此路径剖析的基础上，深入研究了考虑业主路由器先前排序的最大流量入口利用率。在第二种算法中，我们将这种方法缩小到只在故障链路周围的两个节点之间搜索备选路径。
+#### 目标框架
+- 从高层的角度来看，图2说明了我们所建议的框架的主要组件，其中容错组件是我们工作的主要贡献。接下来，我们将更详细地讨论在该框架中使用和开发的组件。
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/omffrosdn/fig2.png" alt="fig2" />
+1. 路径优化算法
+- 这一部分负责根据拓扑解析器可以得到的网络拓扑的全局视图来确定网络流的路径。众所周知的Dijkstra算法[21]被用于寻找到每个新流的最短路径。事实上，不仅在有新的流时需要确定最短路径，在出现故障时也需要确定最短路径，因为遭受故障的路径将不再具有传递流数据包的能力。在这一部分中，我们开发了三个不同的算法，每个算法都有自己的观点从链路故障中恢复。这些包括端到端、端到端和节点到节点的算法。在任何一个特定的时间，只有其中一个可以用于故障管理，这意味着算法不能被选择并行或一起工作，因为每个算法都有不同的机制来解决问题。
+- 第一种算法是端到端算法，它描述了SDN控制器在故障时刻执行的默认动作。当OpenFlow控制器报告失败状态时，将检测到失败的路径，然后控制器将发出两个操作。首先，向所有属于故障路径的正常路由器发送一个明确的命令，然后计算从源路由器$r_{s}$到目的路由器$r_{d}$的备选路径，然后将备选路径中的新流项转发给相关路由器。实际上，我们开发这个算法只是为了与后面的两个算法进行比较。不像那些，它不反映本文的贡献。端到端算法的伪代码见算法1。
+- 第二种算法是端到端算法，这是我们在该框架下的第一个新算法。回想一下，在第四节中，我们定义了路径P的中点集，我们称之为M，即$M = mid(P)$。相对于M，假设一条路径每次都会遇到单一的链接故障，这种故障可以位于路径的$Above(P,M)$边或$Below(P,M)$边。图1中M点的两边都可能发生链接失效。然而，在这项工作中，我们没有考虑在路径两边同时发生的失效。在将来，我们将扩展$F_{r_{j}}$的定义，以包括多故障场景。当发生故障时，控制器会得到故障链路的通知，故障链路两侧的路由器将被加入故障集$F_{r_j}}$。当$F_{r_{j}}\ne()$时，算法2检测失效链路的位置;是在m之上还是在m之下。一旦这样做了，受影响的一方将被一个新的子路径替换，通常是从$r_{s}$或$r_{d}$到$m$。因此，至少有一半的流条目将不需要替换，并且将保持不变。值得注意的是，M可能涉及到链路故障本身，但这种情况不影响概念。算法2给出了该算法的伪代码。
+- 我们在这里提出的最后一个算法是算法3，它是算法2的特殊优化情况。在第三种算法中，我们尝试在失效链路两边的路由器之间，即Frj的两个节点之间找到一条无环路的最短路径。这样做，而不是替换一些不受影响规则的一整块完整路径。很容易注意到，将只删除两个规则，它们将驻留在失败集的路由器中，因此算法保证了规则修改的最小数量。添加规则的总数是未知的，通常取决于网络拓扑结构。算法3给出了该算法的伪代码。
+- 上述算法的复杂度与Dijkstra算法[21]相同，即O(|V| + |E| log |V|)。现在可以清楚地看到，所提出的算法不能保证最短路径，因为它们只处理部分路径，而不是整个路径。然而，它们反而减少了规则修改的数量。通过一个知名的SDN仿真工具，对上述算法进行了评估和验证。下一节将描述我们的实验设置、结果和我们在这项工作中采用的不同网络拓扑。
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SDN/" rel="tag"># SDN</a>
+              <a href="/tags/%E9%93%BE%E8%B7%AF%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 链路故障恢复</a>
+              <a href="/tags/%E8%A2%AB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 被动故障恢复</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/24/SAGIN/Recovery%20Routing%20Based%20on%20Q-Learning%20for%20Satellite%20Network%20Faults/" rel="prev" title="基于Q学习的卫星网络故障恢复路由">
+      <i class="fa fa-chevron-left"></i> 基于Q学习的卫星网络故障恢复路由
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="nav-number">3.</span> <span class="nav-text"> 相关研究</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%99%88%E8%BF%B0%E5%92%8C%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text"> 问题陈述和工作总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text"> 网络模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CalebLogin</p>
+  <div class="site-description" itemprop="description">Talk is cheap, show me the code</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalebLogin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
