@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="主动故障恢复  Cascone, C.; Sanvito, D.; Pollini, L.; Capone, A.; Sansò, B. Fast failure detection and recovery in SDN with stateful data plane. Int. J. Netw. Manag. 2017, 27, e1957. [CrossRef] Padma, V.; Y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="故障恢复论文汇总">
+<meta property="og:url" content="http://example.com/2021/06/24/SAGIN/recovery-total/index.html">
+<meta property="og:site_name" content="CalebLogin的博客">
+<meta property="og:description" content="主动故障恢复  Cascone, C.; Sanvito, D.; Pollini, L.; Capone, A.; Sansò, B. Fast failure detection and recovery in SDN with stateful data plane. Int. J. Netw. Manag. 2017, 27, e1957. [CrossRef] Padma, V.; Y">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-24T06:13:14.000Z">
+<meta property="article:modified_time" content="2021-06-24T06:14:22.426Z">
+<meta property="article:author" content="CalebLogin">
+<meta property="article:tag" content="汇总">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/06/24/SAGIN/recovery-total/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>故障恢复论文汇总 | CalebLogin的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalebLogin的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">CalebLogin's blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/24/SAGIN/recovery-total/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CalebLogin">
+      <meta itemprop="description" content="Talk is cheap, show me the code">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalebLogin的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          故障恢复论文汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-24 14:13:14 / 修改时间：14:14:22" itemprop="dateCreated datePublished" datetime="2021-06-24T14:13:14+08:00">2021-06-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SAGIN/" itemprop="url" rel="index"><span itemprop="name">SAGIN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="主动故障恢复"><a class="markdownIt-Anchor" href="#主动故障恢复"></a> 主动故障恢复</h4>
+<ol>
+<li>Cascone, C.; Sanvito, D.; Pollini, L.; Capone, A.; Sansò, B. Fast failure detection and recovery in SDN with stateful data plane. Int. J. Netw. Manag. 2017, 27, e1957. [CrossRef]</li>
+<li>Padma, V.; Yogesh, P. Proactive failure recovery in OpenFlow based Software Defined Networking. In Proceedings of the 3rd International Conference on Signal Processing, Communication and Networking (ICSCN)</li>
+<li>Huang, L.; Shen, Q.; Shao, W. Congestion Aware Fast Link Failure Recovery of SDN Network Based on Source Routing. KSII Trans. Internet Inf. Syst. 2017, 11, 5200–5222.</li>
+<li>Capone, A.; Cascone, C.; Nguyen, A.Q.T.; Sanso, B. Detour planning for fast and reliable failure recovery in SDN with OpenState. In Proceedings of the International Conference on Design of Reliable Communication Networks, Kansas City, MO, USA, 24–27 March 2015; pp. 25–32.</li>
+<li>Ramos, R.M.; Martinello, M.; Rothenberg, C.E. SlickFlow: Resilient source routing in Data Center Networks unlocked by OpenFlow. In Proceedings of the 38th Annual IEEE Conference on Local Computer Networks, Sydney, Australia, 21–24 October 2013; pp. 606–613.</li>
+<li>Siminesh, C.N.; Grace, M.K.E.; Ranjitha, K. A proactive flow admission and re-routing scheme for load balancing and mitigation of congestion propagation in sdn data plane. Int. J. Comput. Netw. Commun. 2019, 10, 2018.</li>
+<li>Soliman, M.; Nandy, B.; Lambadaris, I.; Ashwood-Smith, P. Exploring source routed forwarding in SDN-based WANs. In Proceedings of the 2014 IEEE International Conference on Communications, Sydney, Australia, 10–14 June 2014; pp. 3070–3075.</li>
+<li>Soliman, M.; Nandy, B.; Lambadaris, I.; Ashwood-Smith, P. Source routed forwarding with software defined control, considerations and implications. In Proceedings of the 2012 ACM Conference on CONEXT Student Workshop, Nice, France, 10 December 2012; pp. 43–44.</li>
+<li>Sangeetha Abdu, J.; Dong, M.; Godfrey, P.B. Towards a flexible data center fabric with source routing. In Proceedings of the 2015 1st ACM SIGCOMM Symposium on Software Defined Networking Research, Santa Clara, CA, USA, 17–18 June 2015; pp. 1–8.</li>
+<li>Kreutz, D.; Ramos, F.M.V.; Veríssimo, P.E.; Rothenberg, C.E.; Azodolmolky, S.; Uhlig, S. Software-defined networking: A comprehensive survey. Proc. IEEE 2015, 103, 14–76. [CrossRef]</li>
+<li>Chang, D.F.; Govindan, R.; Heidemann, J. The temporal and topological characteristics of bgp path changes in Network Protocols. In Proceedings of the 11th IEEE International Conference on Network Protocols, 2003, Proceedings, Atlanta, GA, USA, 4–7 November 2003; pp. 190–199.</li>
+<li>Francois, P.; Bonaventure, O.; Decraene, B.; Coste, P.A. Avoiding disruptions during maintenance operations on bgp sessions. IEEE Trans. Netw. Serv. Manag. 2007, 4, 2007.</li>
+<li>Iannaccone, G.; Chuah, C.N.; Mortier, R.; Bhattacharyya, S.; Diot, C. Analysis of link failures in an ip backbone. In Proceedings of the 2nd ACM SIGCOMMWorkshop on Internet Measurment, Marseille, France, 6–8 November 2002; ACM: New York, NY, USA, 2002; pp. 237–242.</li>
+<li>Vissicchio, S.; Vanbever, L.; Pelsser, C.; Cittadini, L.; Francois, P.; Bonaventure, O. Improving network agility with seamless bgp reconfigurations. IEEE/ACM Trans. Netw. (TON) 2013, 21, 990–1002.</li>
+<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. Enabling fast failure recovery in openflow networks. In Proceedings of the 2011 8th International Workshop on the Design of Reliable Communication Networks (DRCN), Kraków, Poland, 10–12 October 2011; pp. 164–171.</li>
+</ol>
+<h4 id="被动故障恢复"><a class="markdownIt-Anchor" href="#被动故障恢复"></a> 被动故障恢复</h4>
+<ol>
+<li>Muthumanikandan,V.; Valliyammai1, C. Link Failure Recovery Using Shortest Path Fast Rerouting Technique in SDN. Wirel. Pers. Commun. 2017, 97, 2475–2495.</li>
+<li>Astaneh, S.A.; Heydari, S.S. Optimization of SDN_ow operations in multi-failure restoration scenarios. IEEE Trans. Netw. Serv. Manag. 2016, 13, 421–432. [CrossRef]</li>
+<li>Astaneh, S.; Heydari, S.S. Multi-failure restoration with minimal flow operations in software defined networks. In Proceedings of the 2015 11th International Conference on the Design of Reliable Communication Networks (DRCN), Kansas City, MO, USA, 24–27 March 2015; pp. 263–266.</li>
+<li>Jin, X.; Liu, H.H.; Gandhi, R.; Kandula, S.; Mahajan, R.; Zhang, M.; Rexford, J.; Wattenhofer, R. Dynamic scheduling of network updates. ACM SIGCOMM Comput. Commun. Rev. 2014, 44, 539–550.</li>
+<li>Malik, A.; Aziz, B.; Adda, M.; Ke, C.H. Optimisation Methods for Fast Restoration of Software-Defined Networks. IEEE Access 2017, 5, 16111–16123. [CrossRef]</li>
+<li>Maesschalck, S.D.; Colle, D.; Lievens, I.; Pickavet, M.; Demeester, P.; Muaz, C.; Jaeger, M.; Inkret, R.; Mikac, B.; Derkacz, J. Pan-European optical transport networks: An availability-based comparison. Photon. Netw. Commun. 2003, 5, 203–225. [CrossRef]</li>
+<li>Voellmy, A.; Wang, J. Scalable software defined network controllers. In Proceedings of the 2012 ACM SIGCOMM Conference, Helsinki, Finland, 13–17 August 2012; ACM: New York, NY, USA, 2012; pp. 289–290.</li>
+</ol>
+<h4 id="大规模网络故障恢复"><a class="markdownIt-Anchor" href="#大规模网络故障恢复"></a> 大规模网络故障恢复</h4>
+<ol>
+<li>Karakus, M.; Durresi, A. A Survey: Control Plane Scalability Issues and Approaches in Software-Defined Networking (SDN). Comput. Netw. 2017, 112, 279–293.</li>
+<li>Qiu, K.; Yuan, J.; Zhao, J.; Wang, X.; Secci, S.; Fu, X. Efficient Recovery Path Computation for Fast Reroute in Large-scale Software Defined Networks. IEEE J. Sel. Areas Commun. 2018, 37, 1755–1768.</li>
+<li>Abdelaziz, A.; Fong, A.T.; Gani, A.; Garba, U.; Khan, S.; Akhunzada, A.; Talebian, H.; Choo, K.W.R. Distributed controller clustering in software defined networks. PLoS ONE 2017.</li>
+<li>Sinha, Y.; Haribabu, K. A survey: Hybrid SDN. J. Netw. Comput. Appl. 2017, 100, 35–55.</li>
+</ol>
+<h4 id="混合网络故障恢复"><a class="markdownIt-Anchor" href="#混合网络故障恢复"></a> 混合网络故障恢复</h4>
+<ol>
+<li>Caesar, M.; Caldwell, D.; Feamster, N.; Rexford, J.; Shaikh, A.; van der Merwe, J. Design and implementation of a routing control platform. In Proceedings of the 2nd Conference on Symposium on Networked Systems Design&amp;Implementation-Volume 2, Boston, MA, USA, 2 May 2005; USENIX Association: Berkeley, CA, USA, 2005; pp. 15–28.</li>
+<li>Jin, C.; Lumezanu, C.; Xu, Q.; Zhang, Z.L.; Jiang, G. Telekinesis: Controlling legacy switch routing with OpenFlow in hybrid networks. In Proceedings of the 1st ACM SIGCOMM Symposium on Software Defined Networking Research, Santa Clara, CA, USA, 17–18 June 2015; ACM: New York, NY, USA, 2015; p. 20.</li>
+<li>Tilmans, O.; Vissicchio, S.; Vanbever, L.; Rexford, J. Fibbing in action: On-demand load-balancing for better video delivery. In Proceedings of the ACM SIGCOMM 2016 Conference, Florianopolis, Brazil, 22–26 August 2016; ACM: New York, NY, USA, 2016; pp. 619–620.</li>
+<li>Chu, C.Y.; Xi, K.; Luo, M.; Chao, H.J. Congestion-Aware Single Link Failure Recovery in Hybrid SDN Networks. In Proceedings of the 2015 IEEE Conference on Computer Communications (INFOCOM), Kowloon, Hong Kong, 26 April–1 May 2015.</li>
+<li>Rothenberg, C.E.; Nascimento, M.R.; Salvador, M.R.; Correa, C.N.A.; Lucena, S.C.D.; Raszuk, R. Revisiting routing control platforms with the eyes and muscles of software-defined networking. In Proceedings of the first ACM SIGCOMM workshop on HotSDN, Helsinki, Finland, 13 August 2012; Association for Computing Machinery: New York, NY, USA, 2012.</li>
+<li>Vissicchio, S.; Vanbever, L.; Cittadini, L.; Xie, G.; Bonaventure, O. Safe Updates of Hybrid SDN Networks. IEEE/ACM Trans. Netw. 2017, 25, 1649–1662. [CrossRef]</li>
+<li>Kvalbein, A.; Hansen, A.F.; Cicic, T.; Gjessing, S.; Lysne, O. Fast ip network recovery using multiple routing configurations. In Proceedings of the IEEE INFOCOM, Barcelona, Spain, 23–29 April 2006.</li>
+<li>Suchara, M.; Xu, D.; Doverspike, R.; Johnson, D.; Rexford, J. Network architecture for joint failure recovery and traffic engineering. ACM SIGMETRICS Perform. Eval. Rev. 2011, 39, 97–108.</li>
+<li>Reitblatt, M.; Canini, M.; Guha, A.; Foster, N. Fattire: Declarative fault tolerance for software-defined networks. In Proceedings of the second ACMSIGCOMMWorkshop on HotSDN, Hong Kong, China, August 2013 ; Association for Computing Machinery: New York, NY, USA, 2013.</li>
+<li>Vissicchio, S.; Vanbever, L.; Bonaventure, O. Opportunities and research challenges of hybrid software defined networks. ACM SIGCOMM Comput. Commun. Rev. 2014, 44, 70–75. [CrossRef]</li>
+<li>Vissicchio, S.; Vanbever, L.; Cittadini, L.; Xie, G.G.; Bonaventure, O. Safe routing reconfigurations with route redistribution. In Proceedings of the IEEE INFOCOM, Toronto, ON, Canada, 27 April–2 May 2014; pp. 199–207.</li>
+</ol>
+<h4 id="域间网络故障恢复"><a class="markdownIt-Anchor" href="#域间网络故障恢复"></a> 域间网络故障恢复</h4>
+<ol>
+<li>Chun-xiu, L.; Xin, L.; Ke, L.; Hong, Z.; Yu-long, S.; Shan-zhi, C. Toward software defined AS-level fast rerouting. J. China Univ. Posts Telecommun. 2014, 21, 100–108.</li>
+<li>Rekhter, Y.; Li, T. A Border Gateway Protocol 4 BGP-4; ARPANET Working Group Requests for Comment; RFC-1771; DDN Network Information Center: Menlo Park, CA, USA, March 1995.</li>
+<li>Skoldstrom, P.; Yedavalli, K. Network Virtualization and Resource Allocation in OpenFlow-Based Wide Area Networks. In Proceedings of the 2012 IEEE International Conference on Communications (ICC), Ottawa, ON, Canada, 10–15 June 2012.</li>
+</ol>
+<h4 id="带内网络故障恢复"><a class="markdownIt-Anchor" href="#带内网络故障恢复"></a> 带内网络故障恢复</h4>
+<ol>
+<li>OpenFlow Reference Switch Implementation. Available online: <a target="_blank" rel="noopener" href="http://www.openflow.org/">http://www.openflow.org/</a> (accessed on 27 January 2020).</li>
+<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. Fast failure recovery for in-band OpenFlow netwoks. In Proceedings of the 2013 9th International Conference on the Design of Reliable Communication Networks (DRCN), Budapest, Hungary, 4–7 March 2013.</li>
+<li>Schiff, L.; Schmid, S.; Canini, M. Medieval: Towards A Self-Stabilizing Plug &amp; Play In-Band SDN Control Network. In Proceedings of the ACM Sigcomm Symposium on SDN Research (SOSR), Santa Clara, CA, USA, 17–18 June 2015.</li>
+<li>Sharma, S.; Staessens, D.; Colle, D.; Pickavet, M.; Demeester, P. In-Band Control Queuing and Failure Recovery Functionalities for OpenFlow. IEEE Netw. 2016, 30, 106–112.</li>
+<li>Schiff, L.; Kuznetsov, P.; Schmid, S. In-Band Synchronization for Distributed SDN Control Planes. SIGCOMM Comput. Commun. Rev. 2016, 46, 37–43.</li>
+<li>Evans, D. The Internet ofThings: How the Next Evolution ofthe Internet Is Changing Everything; White Paper; Cisco: San Jose, CA, USA, 2011.</li>
+</ol>
+<h4 id="基于机器学习的故障恢复"><a class="markdownIt-Anchor" href="#基于机器学习的故障恢复"></a> 基于机器学习的故障恢复</h4>
+<ol>
+<li>Xu, W.; Zhou, H.; Cheng, N.; Lyu, F.; Shi, W.; Chen, J.; Shen, X. Internet of Vehicles in Big Data Era. IEEE/CAA J. Autom. Sin. 2018, 5, 19–35.</li>
+<li>Wang, M.; Cui, Y.; Wang, X.; Xiao, S.; Jiang, J. Machine Learning for Networking: Workflow, Advances and Opportunities. IEEE Netw. 2018, 32, 92–99.</li>
+<li>Klaine, P.V.; Imran, M.A.; Onireti, O.; Souza, R.D. A survey of machine learning techniques applied to self-organizing cellular networks. IEEE Commun. Surv. Tutor. 2017, 19, 2392–2431. [CrossRef]</li>
+<li>Khunteta, S.; Chavva, A.K.R. Deep Learning Based Link Failure Mitigation. In Proceedings of the 2017 16th IEEE International Conference on Machine Learning and Applications (ICMLA), Cancun, Mexico, 18–21 December 2017.</li>
+<li>Srinivasan, S.M.; Truong-Huu, T.; Gurusamy, M. TE-Based Machine Learning Techniques for Link Fault Localization in Complex Networks. In Proceedings of the IEEE 6th International Conference on Future Internet of Things and Cloud (FiCloud), Barcelona, Spain, 6–8 August 2018.</li>
+<li>Truong-Huu, T.; Mohan, P.M. Fast and Adaptive Failure Recovery using Machine Learning in Software Defined Networks. In Proceedings of the 2019 IEEE International Conference on CommunicationsWorkshops (ICC Workshops), Shanghai, China, 20–24 May 2019.</li>
+<li>Dilmaghani, R.; Bottin, T. Evaluation of Software-Defined Networking for Mission Operations. In Proceedings of the 21st International Command and Control Research and Technology Symposium (ICCRTS), London, UK, 6–8 September 2016.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B1%87%E6%80%BB/" rel="tag"># 汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/21/SAGIN/Efficient%20Recovery%20Path%20Computation%20for%20Fast%20Reroute%20in%20Large-Scale%20Software-Defind%20Networks/" rel="prev" title="在大型网络软件定义网络中使用快速重路由来进行有效的故障恢复路径计算">
+      <i class="fa fa-chevron-left"></i> 在大型网络软件定义网络中使用快速重路由来进行有效的故障恢复路径计算
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">1.</span> <span class="nav-text"> 主动故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A2%AB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">2.</span> <span class="nav-text"> 被动故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">3.</span> <span class="nav-text"> 大规模网络故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">4.</span> <span class="nav-text"> 混合网络故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%9F%E9%97%B4%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">5.</span> <span class="nav-text"> 域间网络故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%86%85%E7%BD%91%E7%BB%9C%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">6.</span> <span class="nav-text"> 带内网络故障恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">7.</span> <span class="nav-text"> 基于机器学习的故障恢复</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CalebLogin</p>
+  <div class="site-description" itemprop="description">Talk is cheap, show me the code</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalebLogin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
