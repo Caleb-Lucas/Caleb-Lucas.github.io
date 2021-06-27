@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="论文引用    论文编号 论文内容     1 A. Sgambelluri, A. Giorgetti, F. Cugini, F. Paolucci and P. Castoldi, “OpenFlow-based segment protection in Ethernet networks,” IEEE&#x2F;OSA Journal of Optical Communications and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于源路由的SDN网络的阻塞感知链路故障恢复方法">
+<meta property="og:url" content="http://example.com/2021/06/27/SAGIN/Congestion%20Aware%20Fast%20Link%20Failure%20Recovery%20of%20SDN%20Network%20Based%20on%20Source%20Routing/index.html">
+<meta property="og:site_name" content="CalebLogin的博客">
+<meta property="og:description" content="论文引用    论文编号 论文内容     1 A. Sgambelluri, A. Giorgetti, F. Cugini, F. Paolucci and P. Castoldi, “OpenFlow-based segment protection in Ethernet networks,” IEEE&#x2F;OSA Journal of Optical Communications and">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig1.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig2.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig3.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig4.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig5.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig6.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig7.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig7.png">
+<meta property="og:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig8_1.png">
+<meta property="article:published_time" content="2021-06-27T08:35:59.000Z">
+<meta property="article:modified_time" content="2021-06-27T08:37:34.139Z">
+<meta property="article:author" content="CalebLogin">
+<meta property="article:tag" content="SDN">
+<meta property="article:tag" content="主动故障恢复">
+<meta property="article:tag" content="链路故障恢复">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig1.png">
+
+<link rel="canonical" href="http://example.com/2021/06/27/SAGIN/Congestion%20Aware%20Fast%20Link%20Failure%20Recovery%20of%20SDN%20Network%20Based%20on%20Source%20Routing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基于源路由的SDN网络的阻塞感知链路故障恢复方法 | CalebLogin的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalebLogin的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">CalebLogin's blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/27/SAGIN/Congestion%20Aware%20Fast%20Link%20Failure%20Recovery%20of%20SDN%20Network%20Based%20on%20Source%20Routing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CalebLogin">
+      <meta itemprop="description" content="Talk is cheap, show me the code">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalebLogin的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于源路由的SDN网络的阻塞感知链路故障恢复方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-27 16:35:59 / 修改时间：16:37:34" itemprop="dateCreated datePublished" datetime="2021-06-27T16:35:59+08:00">2021-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SAGIN/" itemprop="url" rel="index"><span itemprop="name">SAGIN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="论文引用"><a class="markdownIt-Anchor" href="#论文引用"></a> 论文引用</h4>
+<table>
+<thead>
+<tr>
+<th>论文编号</th>
+<th>论文内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>A. Sgambelluri, A. Giorgetti, F. Cugini, F. Paolucci and P. Castoldi, “OpenFlow-based segment protection in Ethernet networks,” IEEE/OSA Journal of Optical Communications and Networking, vol. 5, no. 9, pp. 1066-1075, September, 2013. Article (CrossRef Link)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A. Capone, C. Cascone, A. Q. T. Nguyen and B. Sansò, “Detour planning for fast and reliable failure recovery in SDN with OpenState,” in Proc. of 11th Int. Conference on Design of Reliable Communication Networks , pp. 25-32, March 25-27, 2015,.Article (CrossRef Link)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>N. Kitsuwan, D. B. Payne and M. Ruffini, “A novel protection design for OpenFlow-based networks,” in Proc. of 16th Int. Conference on Transparent Optical Networks, pp. 1-5, July 6-10, 2014. Article (CrossRef Link)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>R. M. Ramos, M. Martinello and C. Esteve Rothenberg, “SlickFlow: Resilient source routing in Data Center Networks unlocked by OpenFlow,” in Proc. of 38th IEEE Conference on Local Computer Networks, pp. 606-613, October 21-24, 2013. Article (CrossRef Link)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>S. Cevher, M. Ulutas, S. Altun and I. Hokelek, “Multi Topology Routing based IP Fast Re-Route for Software Defined Networks,” in Proc. of 2016 IEEE Symposium on Computers and Communication</td>
+</tr>
+<tr>
+<td>7</td>
+<td>W. Braun and M. Menth, “Scalable resilience for Software-Defined Networking using Loop-Free Alternates with loop detection,” in Proc. of 1st IEEE Conference on Network Softwarization, pp. 1-6, April 13-17, 2015. Article (CrossRef Link)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>A.Atlasand, A.Zinin, &quot;Basic Specification for IP Fast Reroute: Loop-Free Alternates, &quot; RFC5286, IETF, 2008. Article (CrossRef Link)</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h4 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h4>
+<ul>
+<li>软件定义网络(Software Defined Network, SDN)中控制平面和数据平面的分离使得其在灵活控制网络行为的同时，也由于故障点到控制器之间的时延给链路故障恢复带来了一些不便。为了避免延迟和丢包，在出现故障时，使用预先定义的备份路径对中断的流进行重路由。但是，这些备份路径的构建和维护开销较大，难以根据网络状态动态构建备份路径，避免重路由过程中的拥塞。为了实现基于拥塞感知的链路故障快速恢复，提出了一种通过源路由和逐跳标记为每条链路安装多条备份路径，并在故障点将流分散到不同路径以避免拥塞的方法。通过实验和仿真对该方法的性能进行了评估，结果表明该方法可以在非常低的开销下实现SDN网络中拥塞感知的快速链路故障恢复。</li>
+<li>为了满足载波级网络恢复时间的要求，提出了SDN[1]~[5]中实现近似零损耗和链路故障快速恢复的几种主动机制。在主动机制中，使用端到端或每跳预先计划的备份路径，保证当链路发生故障时，故障点附近的交换机可以立即将流重新路由通过备份路径到达目的地，而无需控制器的决定。实验结果表明，与传统方法相比，该方法可以获得更短的恢复时间。然而，对于主动机制仍然存在一些问题:<strong>首先，它可能需要大量流条目来构建备份路径，并需要复杂的机制来保持它们的活动;其次，预先规划的备份路径一旦构建好，不便于修改、删除和重建，难以根据网络状态自适应调整备份路径，因此在对中断的流进行重路由时可能会造成拥塞。</strong></li>
+<li>综上所述，故障恢复方法要实现三个目标:(1)快速:对于载波级网络的关键任务要求，必须尽可能快地检测和定位故障点，并对链路故障作出反应。故障恢复总时间应小于50ms;(2)低开销:备份路径消耗的流项尽可能少，使网络能够接受更多的流;(3)拥塞感知:备份路径规划和流重路由过程应考虑网络状态，避免网络其他部分拥塞。</li>
+<li>关于目标(1)和(2)[1]~[7]的研究已经有很多，但很少有研究关注到重路由过程中的拥塞问题。在传统的方式下，为了避免[8]拥塞导致的丢包和业务下降，需要在备份路径上为被保护的流预留带宽。但在实际应用中，这种方法可能会造成网络资源的浪费，且部署复杂。为了实现上述三个目标，本文提出了一种感知拥塞的SDN链路故障快速恢复方法。**该方法利用源路由控制网络边缘流的路由。*控制器根据预定义的每条链路的多备份路径和每条流的带宽需求，在报文的源路由报头中插入每一跳备份路径标签，以识别每一跳流的具体备份路径。*通过这种机制，中断流在重路由过程中通过多个备份路径传输，从而避免拥塞。当发生故障时，故障点附近的交换机根据备份路径标签更新报文的源路由报头，报文就可以绕过故障点。<em>该方法利用了源路由的拓扑独立特性，实现了备份路径规划和备份路径选择的解耦。<em>因此，它可以根据网络状态实现备份路径间的流动态分配。</em></em></li>
+<li>与传统方法相比，我们的方法主要有四个优点:一是可以在不涉及控制器的情况下进行局部链路故障恢复，从而使恢复时间最小化;其次，它可以实现相当低的流量表项消耗，因为它将路由信息存储在包头而不是安装在交换机的流量表项中。第三，它考虑了大多数传统方法忽略的重路由过程中的拥塞问题，可以显著降低拥塞的可能性。第四，既可以处理单链路故障，也可以处理单节点故障。本文的主要贡献如下:(1)提出了一种新的基于源路由的SDN网络体系结构和实现;(2)提出了一种基于源路由SDN的拥塞感知链路故障快速恢复方法;(3)给出了备份路径规划和选择问题的形式化和求解方法;(4)分析了该方法的开销，并对其性能进行了评价。</li>
+</ul>
+<h4 id="相关研究"><a class="markdownIt-Anchor" href="#相关研究"></a> 相关研究</h4>
+<h5 id="链路故障检测"><a class="markdownIt-Anchor" href="#链路故障检测"></a> 链路故障检测</h5>
+<ul>
+<li>链路故障恢复时间由故障检测时间和响应时间两部分组成。为了实现链路故障的快速恢复，在故障发生后立即检测和定位故障是非常重要的。LOS (Loss of Signal)和BFD (Bidirectional Forwarding Detection)[9]被广泛用于检测链路故障。然而，使用LOS进行故障检测的时间可能只有几百毫秒，不能满足载波级网络的要求。BFD在一条路径的两个终端之间使用简单的hello-echo协议，时间消耗在[10]以下50ms。但是BFD无法定位路径中的故障链路，只能检测某条路径的故障，不能检测某条链路的故障。为了解决这一问题，[11]的作者提出了逐链路BFD机制，即在链路的两端而不是路径的两端应用BFD。通过实验，可以在10ms内完成故障检测。</li>
+<li>此外，在[12]和[13]中，提出了一种路径监控和故障定位机制。当一个监控周期覆盖了给定网络中的所有链路时，LSM (Link Status monitoring)包用于监控路径的活动状态。交换机收到LSM报文后，会将FLI报文发送给控制器。因此，当链路出现故障时，可以根据FLI数据包精确定位故障节点。[14]的作者提出了一种链路故障检测机制，利用多控制器之间的信息共享机制，用于检测交换机和控制器之间的控制通道故障。</li>
+<li>有了以上高效快速的检测方法，我们的故障恢复方法就可以实现，如何使故障检测后的反应时间最小化是我们论文的重点。</li>
+</ul>
+<h5 id="反应式故障恢复"><a class="markdownIt-Anchor" href="#反应式故障恢复"></a> 反应式故障恢复</h5>
+<ul>
+<li>有两种机制可以处理链接故障:反应性和前瞻性。典型的反应性方法是[15]、[16]和[17]中提出的快速路径恢复方法。通过这种方法，交换机将拓扑变化事件通知给控制器。然后控制器计算并安装中断流的新路径。该进程耗时可能较大，可能导致丢包和业务中断。此外，[15]的作者还提出了一种改进的快速路径恢复方法，称为“预定恢复”。与快速恢复不同的是，备份路径是有优先级的预先规划，控制器可以为中断的流选择合适的备份路径。</li>
+<li>反应式恢复方法主要有两个缺点:一是由于远程控制器的参与，链路故障恢复的时间消耗不能满足载波级网络的需求，在[10]和[18]上进行了实验验证;其次，中断流的计算和安装路径可能给控制器带来沉重的负担，从而降低整个网络的性能。</li>
+</ul>
+<h5 id="主动故障恢复"><a class="markdownIt-Anchor" href="#主动故障恢复"></a> 主动故障恢复</h5>
+<ul>
+<li>为了克服被动方法的缺点，主动方法使用静态预先计划的备份路径来重新路由中断的流，而不涉及控制器。而主动性方法的关键是建立一种切换机制，使旧路径的流入口失效，然后自动启用备份路径的流入口。在启用openflow的交换机中，除了“空闲超时”和“硬超时”等entry expiry timer外，没有这样的机制。因此，为了实现快速主动的链路故障，[1]提出了一种名为“自动拒绝”的方法，该方法可以检测到链路故障并禁用流入口。在[19]中，作者提出了一种流入口过期机制，用于在链路发生故障时自动删除旧路径的条目。在[2]中，作者使用Openstate来监控数据包和交换机端口状态，并在交换机端口故障时重新分配流到新的路径。然而，上述机制需要对交换机进行额外的修改，难以在实践中应用。Openflow v1.5通过实例化相同流条目的多个动作列表并根据链路状态[20]应用它们，提供了一种称为故障转移组表的快速故障转移机制。它不需要对Openflow协议进行任何修改，可以根据动作列表的活动状态实现自动切换。</li>
+<li>在上述切换机制的基础上，提出了几种主动切换方法。为了减少故障恢复时间，[1]的作者提出了一种改进的链路保护称为段保护。该方案不采用端到端备份路径，而是在每一跳上规划备份路径，使流可以在故障链路相邻的本地交换机上重路由，从而缩短故障恢复时间。但是，段保护需要大量的流入口来构建备份路径，需要复杂的机制来保持备份路径的活跃。</li>
+<li>为了减少流条目的数量在段保护,建立备份路径[3]的作者提出了一个新颖的设计被称为独立的瞬态平面(ITP),它包含链接,可以通过不同的备份路径路由共享流来使流条目的数量减少。<strong>此外，[7]的作者将[21]应用到基于openflow的网络中。通过附加的环路检测机制，可以在很低的开销下实现最大的保护覆盖。但这些方法仍然存在两个问题:一是流量入口的消耗量仍然较大，需要进一步优化;第二，备份路径规划过程中没有考虑链路状态，在重路由过程中可能会造成拥塞。</strong></li>
+<li>为了解决拥塞问题，[13]提出了一种考虑链路利用率的备份路径优化方法。提出了优化模型并进行了评价。虽然使用优化后的备份路径可以减少拥塞的可能性，但由于静态路径不能根据网络状态自适应调整，因此效率仍然不够。</li>
+<li>在[2]中，作者提出了一种基于Openstate的多路径重路由(MPR)方法。该方法通过为每条链路规划多条备份路径，将流分配到备份路径，从而提高了网段保护能力，解决了拥塞问题。通过优化模型，该方法可以显著降低拥塞的可能性，但备份路径仍然是静态规划的，需要太多的流入口。</li>
+<li>在[4]中提出了一种基于源路由的SlickFlow方法。它将所有备份路径编码到包头中。当链路发生故障时，交换机查找备份路径并重新路由数据包。显然，这种方法给包头带来了太多的开销，而且还使用了静态备份路径。</li>
+<li>在[22]和[23]中，研究了IP和Openflow混合网络中感知拥塞的链路故障快速恢复方法。Openflow交换机已预先规划并安装了多条备份路径。当发生故障时，IP交换机将中断的报文直接转发给Openflow交换机。然后Openflow交换机选择正确的备份路径重新路由数据包。虽然这种方法可以很好地处理拥塞问题，但它在IP网络中比SDN网络更有效。</li>
+<li>综上所述，目前还没有一种方法可以同时满足第1节中提到的三个要求，其主要原因是<strong>SDN中流与路径流传输的紧密耦合</strong>。在我们的方法中，我们使用源路由来分离流和它的路径，使它能够在非常低的开销下实现感知拥塞的快速链路故障。</li>
+</ul>
+<h4 id="提出的链路快速故障恢复的方法"><a class="markdownIt-Anchor" href="#提出的链路快速故障恢复的方法"></a> 提出的链路快速故障恢复的方法</h4>
+<h5 id="报文头编码"><a class="markdownIt-Anchor" href="#报文头编码"></a> 报文头编码</h5>
+<ul>
+<li>近年来，源路由SDN (source routing SDN)由于可以在不丧失流量可编程性的同时减少SDN中使用的表项数量而受到了一些关注。然而，在最新的Openflow中还不支持源路由。因此本文对802.1q的VLAN tag进行修改，实现源路由。vlan_id和vlan_user_priority字段用于对路由信息进行编码。</li>
+<li>与传统的源路由不同，我们的下一跳信息分为两部分:输出端口号和备份路径标记。输出端口号编码在vlan_id(VID)字段中，备份路径标记编码在vlan_user_priority(VUP)字段中，如图1所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig1.png" alt="fig1" /></li>
+<li>802.1q的VLAN tag中VID字段的长度为12位，最多支持212个下一跳。VUP字段长度为3bit，最多支持8条备份路径。网络正常时，交换机通过匹配VID字段将报文沿工作路径发送;链路故障时，通过匹配VUP字段将报文引导到备份路径。</li>
+<li>此外，VLAN tag和源路由报头的长度可能会给报文带来开销，从而限制源路由SDN的可扩展性。但是，由于VLAN tag使用的比特数较少，可以进一步优化报文头的长度。我们相信凭借Openflow提供的任意匹配能力，在不久的将来可以开发出更短包头长度的源路由机制。</li>
+</ul>
+<h5 id="源路由sdn"><a class="markdownIt-Anchor" href="#源路由sdn"></a> 源路由SDN</h5>
+<ul>
+<li>Source Routing SDN (SR-SDN)主要有三种功能:报文头编程、报文转发和报文导向。为了实现快速故障恢复，我们利用了Openflow的快速故障转移组表，该表可以根据具体情况执行不同的动作列表。</li>
+</ul>
+<ol>
+<li>报文头编程<br />
+报文头编程根据控制器预先安装的流入口和动作列表，将报文的源路由头与3.1引入的VLAN tag进行组合，如图2所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig2.png" alt="fig2" /><br />
+通过Openflow提供的Push_vlan_tag动作，交换机可以在报文的报文头嵌套几个VLAN tag，从而形成路由信息。</li>
+<li>报文转发<br />
+报文转发过程根据报文头编程过程形成的下一跳信息转发报文，如图3所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig3.png" alt="fig3" /><br />
+交换机通过匹配VID字段找到合适的端口输出报文，并使用Openflow提供的Pop_Vlan_Tag动作删除报文头中最外层的VLAN tag。</li>
+<li>报文转向<br />
+数据包导向通过更新源路由报头来引导数据包到一个新的路径，如图4所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig4.png" alt="fig4" /><br />
+当链路发生故障时，failover组表中主动作列表的alive状态变为DOWN。第二动作列表根据备份路径标签和目的IP地址，通过弹出和推送VLAN标签的方式更新报文的源路由头。更新过程结束后，重新检查报文，并根据新的源路由报头输出报文。</li>
+</ol>
+<h5 id="方法程序"><a class="markdownIt-Anchor" href="#方法程序"></a> 方法程序</h5>
+<ul>
+<li>本文提出的基于拥塞感知的链路故障快速恢复方法包括备份路径规划、备份路径选择、链路故障快速恢复3个步骤。前两个步骤在控制器和边缘交换机中执行，最后一个步骤仅在链路故障时在核心交换机中执行。</li>
+<li>在备份路径规划过程中，控制器根据网络状态，找到能够以最小跳数提供足够可用带宽的最优备份路径集。此外，为了降低备份路径规划算法的复杂度和路径构建的流入口消耗，需要限制每条链路的备份路径数量。然后控制器标记每个备份路径，并将相应的流表安装到交换机。规划过程如图5所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig5.png" alt="fig5" /></li>
+<li>在备份路径选择过程中，控制器根据流的带宽需求，在每一跳为每条流分配合适的备份路径，并在报文报头的每一跳信息中插入所选备份路径的标签。选择过程如图6所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig6.png" alt="fig6" /></li>
+<li>只有当链路出现故障时，才会执行快速链路故障。在快速链路故障恢复过程中，中断的报文通过快速故障切换组表进行处理，快速故障切换组表根据报文报头中的备份路径标签和目的IP地址将报文引导到正确的备份路径。故障恢复过程如图7所示:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig7.png" alt="fig7" /></li>
+</ul>
+<h5 id="案例"><a class="markdownIt-Anchor" href="#案例"></a> 案例</h5>
+<ul>
+<li>考虑图8的拓扑结构，从S到T有两个工作流程，分别标记为flow1和flow2。流量1的传输速率为50Mbps，流量2的传输速率为30Mbps。工作路径为S→D→T。根据端口id识别交换机的每个端口，如图8所示，那么我们可以通过以下步骤演示我们的快速故障恢复方法:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig7.png" alt="fig7" /></li>
+<li>步骤1: 备份路径规划。有两个环节需要保护:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">S→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>。我们假定每个链路使用两条备份路径。控制器根据网络情况，执行<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">S→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>两条链路的备份路径规划算法。假设经过备份路径规划过程，为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">S→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>选择两条备份路径<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>A</mi><mo>→</mo><mi>B</mi><mo>→</mo><mi>C</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">S→A→B→C→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>E</mi><mo>→</mo><mi>F</mi><mo>→</mo><mi>G</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">S→E→F→G→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，分别标记为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>。同样地，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>选择路径<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>B</mi><mo>→</mo><mi>C</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→B→C→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>F</mi><mo>→</mo><mi>G</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→F→G→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，并被<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{dt,2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>标记。然后控制器在交换机S和D上安装流项，流项与报文的VUP字段匹配，更新报文头。</li>
+<li>步骤2: 选择备份路径。假设交换机S的备份路径<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>的可用带宽分别为70Mbps和60Mbps。在备份路径选择过程结束后，我们假设控制器根据备份路径的可用带宽和流的需求，在交换机S将flow1分配给路径<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>，将flow2分配给路径<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>。然后将flow1的第一跳信息组织为“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”。其中1为输出端口ID, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>为备份路径ID。此外，如果备份路径标记为X，则流没有备份路径。在交换机D中经过相同的过程后，我们假设flow1的包头为“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,1}1p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”，flow2的包头为“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>2</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,2}1p_{dt,2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”。</li>
+<li>步骤3: 快速链接故障恢复。我们假设链路<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>在某个时间发生故障，然后快速恢复过程开始。我们以flow1为例。在交换机S，它检查最外层的VLAN标签为“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”。匹配后，交换机删除标签“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”，报文头由“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>s</mi><mi>d</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{sd,1}1p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”变为“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”。然后交换机S通过port1输出报文，因为在链路<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>→</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">S→D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span>没有链路故障。在交换机D，包的头是“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”，端口1失败。然后切换D查看备份路径ID为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>。根据step1中安装的流表项，交换机D弹出VLAN标签“<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msub><mi>p</mi><mrow><mi>d</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">1p_{dt,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9305479999999999em;vertical-align:-0.286108em;"></span><span class="mord">1</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>”，并在交换机D处推送VLAN标签“0X”，“1X”，“3X”，表示备份路径1:<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>→</mo><mi>B</mi><mo>→</mo><mi>C</mi><mo>→</mo><mi>T</mi></mrow><annotation encoding="application/x-tex">D→B→C→T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>，重新检查报文，通过port3输出。同样的操作也会在flow2上执行，这样中断的流就可以绕过失败的链路。</li>
+</ul>
+<h4 id="备份路径规划与选择"><a class="markdownIt-Anchor" href="#备份路径规划与选择"></a> 备份路径规划与选择</h4>
+<h5 id="备份路径规划"><a class="markdownIt-Anchor" href="#备份路径规划"></a> 备份路径规划</h5>
+<ul>
+<li>网络可以用一个双向图<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi><mo stretchy="false">(</mo><mi>V</mi><mo separator="true">,</mo><mi>E</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">G(V,E)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">G</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mclose">)</span></span></span></span>表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span>是图<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span>中节点的集合，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi></mrow><annotation encoding="application/x-tex">E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span></span></span></span>是图<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span>中链路的集合。定义如下参数:<br />
+<img src="https://gitee.com/caleblogin/pics/raw/master/sagin/caflfrosnbosr/fig8_1.png" alt="fig8_1" /></li>
+<li>在备份路径规划过程中，需要找到一组满足以下要求的备份路径:<strong>(1)任何一条备份路径都不包含故障节点且无环路;(2)备份路径必须是链路不相交的;(3)每条链路的备份路径个数不大于上限<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mi>u</mi><msub><mi>m</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">Num_{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault">u</span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>;(4)备份路径应提供尽可能多的可用带宽;(5)备份路径尽可能短</strong>。因此我们可以将问题形式化为多目标优化问题，如(1)所示:</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false">[</mo><munder><mo>∑</mo><mrow><mi>p</mi><mo>∈</mo><msub><mi>D</mi><mrow><mi>s</mi><mi>d</mi></mrow></msub></mrow></munder><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi><mo>∈</mo><mi>E</mi></mrow></munder><msubsup><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow><mi>p</mi></msubsup><msubsup><mi>t</mi><mi>p</mi><mi>B</mi></msubsup><mo separator="true">,</mo><mo>−</mo><munder><mo>∑</mo><mrow><mi>p</mi><mo>∈</mo><msub><mi>D</mi><mrow><mi>s</mi><mi>d</mi></mrow></msub></mrow></munder><msubsup><mi>t</mi><mi>p</mi><mi>B</mi></msubsup><msub><mi>c</mi><mi>p</mi></msub><mo stretchy="false">]</mo><mo separator="true">,</mo><mi mathvariant="normal">∀</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>E</mi><mo separator="true">,</mo><mi mathvariant="normal">∀</mi><mi>p</mi><mo>∈</mo><msub><mi>D</mi><mrow><mi>s</mi><mi>d</mi></mrow></msub><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">V=min[\sum_{p\in{D_{sd}}}\sum_{ij\in{E}}e^{p}_{ij}t^{B}_{p},-\sum_{p\in{D_{sd}}}t^{B}_{p}c_{p}],\forall(i,j)\in{E},\forall{p}\in{D_{sd}}......(1)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.480449em;vertical-align:-1.430444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">[</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8556639999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mrel mtight">∈</span><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.430444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8556639999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">∈</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05764em;">E</span></span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.430444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7823em;"><span style="top:-2.4231360000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.412972em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.891331em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8556639999999998em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mrel mtight">∈</span><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02778em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15122857142857138em;"><span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.430444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.891331em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∀</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∀</span><span class="mord"><span class="mord mathdefault">p</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></p>
+<ul>
+<li>在实践中，需要重新路由流的可用带宽应该有一个下限。因此引入参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi><mo stretchy="false">(</mo><mi>γ</mi><mo>⩾</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\gamma(\gamma\geqslant1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel amsrm">⩾</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，并将其下界定义为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi><msub><mo>∑</mo><mi>i</mi></msub><mi>c</mi><mo stretchy="false">(</mo><msub><mi>f</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\gamma\sum_{i}c(f_{i})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0497100000000001em;vertical-align:-0.29971000000000003em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16195399999999993em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。然后将问题转化为具有带宽保证的k最短不相交路径问题(K-SDPBG)。因此我们可以得到多约束0-1整数线性规划模型:</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><munder><mo>∑</mo><mi>p</mi></munder><munder><mo>∑</mo><mrow><mi>i</mi><mi>j</mi></mrow></munder><msubsup><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow><mi>p</mi></msubsup><msubsup><mi>t</mi><mi>p</mi><mi>B</mi></msubsup></mrow><annotation encoding="application/x-tex">min\sum_{p}\sum_{ij}e^{p}_{ij}t^{B}_{p}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.463782em;vertical-align:-1.413777em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.386113em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8723309999999997em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.413777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7823em;"><span style="top:-2.4231360000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.1809080000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.412972em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.891331em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SDN/" rel="tag"># SDN</a>
+              <a href="/tags/%E4%B8%BB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 主动故障恢复</a>
+              <a href="/tags/%E9%93%BE%E8%B7%AF%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D/" rel="tag"># 链路故障恢复</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/24/SAGIN/Optimisation%20Methods%20for%20Fast%20Restoration%20of%20Software-Defined%20Networks/" rel="prev" title="软件定义网络的快速恢复优化方法">
+      <i class="fa fa-chevron-left"></i> 软件定义网络的快速恢复优化方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E5%BC%95%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text"> 论文引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="nav-number">3.</span> <span class="nav-text"> 相关研究</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E6%95%85%E9%9A%9C%E6%A3%80%E6%B5%8B"><span class="nav-number">3.1.</span> <span class="nav-text"> 链路故障检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8D%E5%BA%94%E5%BC%8F%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">3.2.</span> <span class="nav-text"> 反应式故障恢复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BB%E5%8A%A8%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text"> 主动故障恢复</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%87%BA%E7%9A%84%E9%93%BE%E8%B7%AF%E5%BF%AB%E9%80%9F%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text"> 提出的链路快速故障恢复的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E5%A4%B4%E7%BC%96%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text"> 报文头编码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BA%90%E8%B7%AF%E7%94%B1sdn"><span class="nav-number">4.2.</span> <span class="nav-text"> 源路由SDN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E7%A8%8B%E5%BA%8F"><span class="nav-number">4.3.</span> <span class="nav-text"> 方法程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">4.4.</span> <span class="nav-text"> 案例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E4%B8%8E%E9%80%89%E6%8B%A9"><span class="nav-number">5.</span> <span class="nav-text"> 备份路径规划与选择</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92"><span class="nav-number">5.1.</span> <span class="nav-text"> 备份路径规划</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CalebLogin</p>
+  <div class="site-description" itemprop="description">Talk is cheap, show me the code</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalebLogin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
