@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="事务  什么是事务 事务是指满足ACID特性的一组操作，可以通过Commit提交一个事务，也可以使用Rollback进行回滚。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库">
+<meta property="og:url" content="http://example.com/2021/07/09/REVIEW/%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="CalebLogin的博客">
+<meta property="og:description" content="事务  什么是事务 事务是指满足ACID特性的一组操作，可以通过Commit提交一个事务，也可以使用Rollback进行回滚。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-09T13:24:39.000Z">
+<meta property="article:modified_time" content="2021-07-09T13:25:29.922Z">
+<meta property="article:author" content="CalebLogin">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/09/REVIEW/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库 | CalebLogin的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalebLogin的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">CalebLogin's blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/09/REVIEW/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CalebLogin">
+      <meta itemprop="description" content="Talk is cheap, show me the code">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalebLogin的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-09 21:24:39 / 修改时间：21:25:29" itemprop="dateCreated datePublished" datetime="2021-07-09T21:24:39+08:00">2021-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E7%BB%8F/" itemprop="url" rel="index"><span itemprop="name">面经</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="事务"><a class="markdownIt-Anchor" href="#事务"></a> 事务</h2>
+<h3 id="什么是事务"><a class="markdownIt-Anchor" href="#什么是事务"></a> 什么是事务</h3>
+<p>事务是指满足ACID特性的一组操作，可以通过Commit提交一个事务，也可以使用Rollback进行回滚。</p>
+<span id="more"></span>
+<h3 id="事务的四大特性"><a class="markdownIt-Anchor" href="#事务的四大特性"></a> 事务的四大特性</h3>
+<ol>
+<li>原子性.事务被视为不可分割的最小单元，事务的所有操作要么全部提交成功，要么全部失败回滚。回滚可以用回滚日志来实现，回滚日志记录着事务所执行的修改操作，在回滚时反向执行这些操作即可。</li>
+<li>一致性.数据库在事务执行前后都保持一致性状态。在一致性状态下，所有事务对同一数据的读取结果都是相同的。</li>
+<li>隔离性.一个事务所做的修改在最终提交之前，对其他事务是不可见的。</li>
+<li>持久性.一旦事务提交，则其所做的修改将会永远保存到数据库中。即使系统崩溃，事务的执行的结果也不能丢失。系统发生崩溃，可以用重做日志进行恢复，从而实现持久性。</li>
+</ol>
+<h3 id="acid的理解"><a class="markdownIt-Anchor" href="#acid的理解"></a> ACID的理解</h3>
+<ul>
+<li>只有满足一致性，事务的执行结果才是正确的。</li>
+<li>在无并发的情况下，事务串行执行，隔离性一定能满足。此时只要能满足原子性，就一定能满足一致性。</li>
+<li>在并发的情况下，多个事务并行执行，事务不仅要满足原子性，还要满足隔离性才能满足一致性。</li>
+<li>事务持久化是为了能应对系统崩溃的情况。</li>
+</ul>
+<h2 id="并发一致性问题"><a class="markdownIt-Anchor" href="#并发一致性问题"></a> 并发一致性问题</h2>
+<p>在并发环境下，事务的隔离性很难保证，因此会出现很多并发一致性的问题。</p>
+<ul>
+<li>丢失修改。一个事务的更新操作被另一个事务的更新操作替代。比如A修改数据的时候，事务未结束，B就来修改数据，结果导致第一个事务修改的数据丢失</li>
+<li>读脏数据。事务A在进行修改后，事务还未提交，事务B就读到了事务A修改的数据，结果事务A又撤销了修改，事务B读到的数据就是脏数据</li>
+<li>不可重复读。在一个事务A内多次读同一个数据，在这个事务还没有结束的时候，另一个事务对该数据进行了修改操作，导致第一个事务两次读取的结果不太一样。</li>
+<li>幻读。幻读也是不可重复读的一种情况，当一个事务读取了几行数据，接着另一个事务插入了几行数据，在随后的查询中，第一个事务就会发现多了一些原本不存在的记录。比如学生数量原来为5，另一个事务又插入了一名学生，导致再次查询时学生数量变成了6.</li>
+</ul>
+<h2 id="封锁"><a class="markdownIt-Anchor" href="#封锁"></a> 封锁</h2>
+<h3 id="封锁的粒度表级锁和行级锁"><a class="markdownIt-Anchor" href="#封锁的粒度表级锁和行级锁"></a> 封锁的粒度：表级锁和行级锁</h3>
+<ul>
+<li>表级锁，粒度最大的一种锁，对当前操作的整张表进行加锁，资源消耗比较少，加锁快，不会出现死锁，发生锁的冲突概率大，并发度低</li>
+<li>行级锁，粒度最小的一种锁，对当前操作的行进行加锁，资源消耗比较大，加锁慢，会出现死锁，但是并发度高。</li>
+<li>锁分类：共享锁S（读锁），排他锁X（写锁）意向锁（表锁）（IS,IX）<br />
+一个事务对数据进行读取和更新的时候，需要对这个对象加X锁。<br />
+一个事务对数据进行读取的时候，需要对这个对象加S锁，加锁期间，其他事务想要对这个对象进行操作的时候，只能加S锁，不能加X锁。<br />
+使用意向锁更容易实现多粒度封锁。IX表示希望对这个对象加X锁，IS表示希望对这个对象加S锁。S锁只与S锁和IS锁兼容，也就是说事务A想对数据加S锁时，其它事务可以对表或表中的行加S锁。</li>
+</ul>
+<h3 id="封锁协议"><a class="markdownIt-Anchor" href="#封锁协议"></a> 封锁协议</h3>
+<h4 id="三级封锁协议"><a class="markdownIt-Anchor" href="#三级封锁协议"></a> 三级封锁协议</h4>
+<ol>
+<li>一级封锁协议，事务A想要修改数据，必须加X锁，事务结束才能释放锁。（解决丢失修改问题）</li>
+<li>二级封锁协议，在一级封锁协议的基础上，事务A想要读数据必须加S锁，读取完马上释放锁。（解决读脏数据问题）</li>
+<li>三级封锁协议，在二级封锁协议的基础上，事务A想要读数据必须加S锁，事务结束才能释放锁。（解决不可重复读的问题）</li>
+</ol>
+<h4 id="两段封锁协议"><a class="markdownIt-Anchor" href="#两段封锁协议"></a> 两段封锁协议</h4>
+<p>加锁和解锁分为两个阶段进行。<br />
+可串行调度：通过并发控制，使得并发执行的事务与某个串行执行的事务结果相同。串行执行的事务互不干扰，不会出现并发一致性问题。</p>
+<h2 id="隔离级别"><a class="markdownIt-Anchor" href="#隔离级别"></a> 隔离级别</h2>
+<ul>
+<li>未提交读。最低的隔离级别，可能会导致脏读，幻读和不可重复读</li>
+<li>提交读。允许读取已经提交的事务，可以阻止脏读，但不能阻止幻读和不可重复读</li>
+<li>可重复读（MySQL默认级别）。对同一字段的多次读取结果是一样的，除非数据被本身事务自己所修改，可以阻止脏读和不可重复读，可能会导致幻读。</li>
+<li>可串性化。最高的隔离级别，完全服从ACID的隔离级别。<br />
+MySQL的存储引擎InnoDB在可重复读的隔离级别下，使用的是Next-key Lock锁算法，可以避免幻读的产生，已经完全保证事务的隔离性要求。</li>
+</ul>
+<h2 id="多版本控制"><a class="markdownIt-Anchor" href="#多版本控制"></a> 多版本控制</h2>
+<h3 id="多版本并发控制mvcc"><a class="markdownIt-Anchor" href="#多版本并发控制mvcc"></a> 多版本并发控制（MVCC）</h3>
+<p>MVCC是InnoDB存储引擎实现隔离级别的一种方式，实现了提交读和可重复读两种隔离级别。可串性化隔离级别需要对所有读取的行都加锁，单独使用MVCC不能实现。写操作去读最新的版本快照，读操作去读旧的版本快照，没有互斥关系。</p>
+<h3 id="版本号"><a class="markdownIt-Anchor" href="#版本号"></a> 版本号</h3>
+<ul>
+<li>系统版本号：SYS_ID：是一个递增的数字，每开始一个新的事务，系统版本号就会自动递增。</li>
+<li>事务版本号：TRX_ID：事务开始时的系统版本号。</li>
+<li>MVCC的多版本是指多个版本的快照，快照存放在Undo日志中，该日志通过回滚指针将一个数据行的所有快照连接起来。</li>
+</ul>
+<h3 id="隐藏的列"><a class="markdownIt-Anchor" href="#隐藏的列"></a> 隐藏的列</h3>
+<p>MVCC在每行记录后面都保存着两个隐藏列，用于保存两个系统版本号。</p>
+<ul>
+<li>创建版本号：创建一个数据行的快照时系统的版本号</li>
+<li>删除版本号：如果该快照的删除版本号大于当前事务版本号表示事务有效，否则表示已经被删除。</li>
+</ul>
+<h3 id="实现过程"><a class="markdownIt-Anchor" href="#实现过程"></a> 实现过程</h3>
+<p>当开始一个事务时，当前事务的版本号肯定会大于当前所有行快照的创建版本号。</p>
+<ol>
+<li>select</li>
+<li>insert 当前系统版本号作为当前快照的创建版本号。</li>
+<li>update 当前系统版本号作为更新前的删除版本号，当前系统版本号作为更新后的数据行快照的创建版本号。</li>
+<li>delete 当前系统版本号作为当前快照的删除版本号。</li>
+</ol>
+<h2 id="next-key-locks"><a class="markdownIt-Anchor" href="#next-key-locks"></a> Next-Key Locks</h2>
+<p>InnoDB引擎中的锁的算法：Record lock，Gap lock，next-key lock</p>
+<ul>
+<li>Record lock：锁定一个记录上的索引，而不是记录本身。如果表没有设置索引，InnoDB存储引擎会自动在主键上创建隐藏的聚簇索引，所以Record lock依然可以用。</li>
+<li>Gap lock：锁定索引之间的间隙，但不包含索引本身。</li>
+<li>next-key lock：是Record lock和Gap lock的结合，不仅锁定记录上的索引，也锁定索引之间的间隙。它锁定一个前开后闭区间。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/09/REVIEW/mysql/" rel="prev" title="MySQL">
+      <i class="fa fa-chevron-left"></i> MySQL
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text"> 事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text"> 什么是事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text"> 事务的四大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acid%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text"> ACID的理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text"> 并发一致性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text"> 封锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E9%94%81%E7%9A%84%E7%B2%92%E5%BA%A6%E8%A1%A8%E7%BA%A7%E9%94%81%E5%92%8C%E8%A1%8C%E7%BA%A7%E9%94%81"><span class="nav-number">3.1.</span> <span class="nav-text"> 封锁的粒度：表级锁和行级锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.2.</span> <span class="nav-text"> 封锁协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.2.1.</span> <span class="nav-text"> 三级封锁协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E6%AE%B5%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.2.2.</span> <span class="nav-text"> 两段封锁协议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text"> 隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text"> 多版本控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6mvcc"><span class="nav-number">5.1.</span> <span class="nav-text"> 多版本并发控制（MVCC）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-number">5.2.</span> <span class="nav-text"> 版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E7%9A%84%E5%88%97"><span class="nav-number">5.3.</span> <span class="nav-text"> 隐藏的列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="nav-number">5.4.</span> <span class="nav-text"> 实现过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#next-key-locks"><span class="nav-number">6.</span> <span class="nav-text"> Next-Key Locks</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CalebLogin</p>
+  <div class="site-description" itemprop="description">Talk is cheap, show me the code</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalebLogin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
