@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="概述  什么是操作系统  操作系统是管理计算机硬件和软件程序的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的软件程序，用于管理计算机硬件和软件资源。 操作系统的存在屏蔽了硬件层的复杂性。 操作系统的内核是操作系统的核心部分，它负责系统的内存管理，设备管理，文件系统管理和应用程序的管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统">
+<meta property="og:url" content="http://example.com/2021/07/10/REVIEW/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="CalebLogin的博客">
+<meta property="og:description" content="概述  什么是操作系统  操作系统是管理计算机硬件和软件程序的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的软件程序，用于管理计算机硬件和软件资源。 操作系统的存在屏蔽了硬件层的复杂性。 操作系统的内核是操作系统的核心部分，它负责系统的内存管理，设备管理，文件系统管理和应用程序的管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-10T07:00:27.000Z">
+<meta property="article:modified_time" content="2021-07-10T07:01:19.264Z">
+<meta property="article:author" content="CalebLogin">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="虚拟内存">
+<meta property="article:tag" content="进程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/07/10/REVIEW/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>操作系统 | CalebLogin的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CalebLogin的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">CalebLogin's blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/10/REVIEW/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="CalebLogin">
+      <meta itemprop="description" content="Talk is cheap, show me the code">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CalebLogin的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          操作系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-10 15:00:27 / 修改时间：15:01:19" itemprop="dateCreated datePublished" datetime="2021-07-10T15:00:27+08:00">2021-07-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h2>
+<h3 id="什么是操作系统"><a class="markdownIt-Anchor" href="#什么是操作系统"></a> 什么是操作系统</h3>
+<ol>
+<li>操作系统是管理计算机硬件和软件程序的程序，是计算机的基石。</li>
+<li>操作系统本质上是一个运行在计算机上的软件程序，用于管理计算机硬件和软件资源。</li>
+<li>操作系统的存在屏蔽了硬件层的复杂性。</li>
+<li>操作系统的内核是操作系统的核心部分，它负责系统的内存管理，设备管理，文件系统管理和应用程序的管理。</li>
+</ol>
+<span id="more"></span>
+<h3 id="操作系统的基本功能"><a class="markdownIt-Anchor" href="#操作系统的基本功能"></a> 操作系统的基本功能</h3>
+<ol>
+<li>进程管理：进程控制、进程同步、进程通信、死锁处理、处理机调度等</li>
+<li>内存管理：内存分配、地址映射、内存保护与共享、虚拟内存等</li>
+<li>设备管理：文件存储空间的管理、目录管理、文件读写管理和保护等</li>
+<li>文件管理：完成用户I/O请求，方便用户使用各种设备，并提高设备的利用率。主要包括：缓冲管理、设备分配、设备处理、虚拟设备等。</li>
+</ol>
+<h3 id="操作系统的特点"><a class="markdownIt-Anchor" href="#操作系统的特点"></a> 操作系统的特点</h3>
+<ul>
+<li>共享：操作系统中的资源可以被多个并发进程使用。互斥共享和同时共享。</li>
+<li>虚拟：虚拟技术把一个物理实体转换成多个逻辑实体。</li>
+<li>并发：在一段时间内同时运行多个程序。</li>
+<li>异步：进程不是一次性执行完毕，而是走走停停，以不可知的速度向前推进。</li>
+</ul>
+<h3 id="什么是系统调用"><a class="markdownIt-Anchor" href="#什么是系统调用"></a> 什么是系统调用</h3>
+<ul>
+<li>用户态和内核态</li>
+<li>用户态可以直接读取应用程序中的数据。内核态：操作系统运行的进程或程序几乎可以访问系统的任何资源。</li>
+<li>当用户态的应用程序想要调用内核态的子功能时需要用到系统调用。也就是说应用程序凡是需要用到与内核态级别的资源有关的操作，都需要通过系统调用向操作系统发出服务请求，由操作系统代为完成。</li>
+<li>系统调用：进程控制、进程通信、文件操作、设备操作等。</li>
+</ul>
+<h2 id="进程"><a class="markdownIt-Anchor" href="#进程"></a> 进程</h2>
+<h3 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h3>
+<ul>
+<li>进程是资源分配的基本单位。线程不拥有资源，但是线程可以访问隶属进程的资源</li>
+<li>线程是独立调度的基本单位。在同一个进程内的线程之间切换不会引起进程切换，但是从一个进程中的线程切换到另一个进程中的线程时，会引起进程的切换。</li>
+<li>线程的开销比进程的开销要小。进程的创建或撤销需要分配或者回收资源，如内存空间、I/O设备等，所付出的开销远大于创建或撤销时的开销。</li>
+<li>线程间可以通过直接读写同一进程内的数据进行通信。</li>
+</ul>
+<h3 id="进程有哪几种状态"><a class="markdownIt-Anchor" href="#进程有哪几种状态"></a> 进程有哪几种状态</h3>
+<ul>
+<li>创建状态</li>
+<li>就绪状态</li>
+<li>运行状态</li>
+<li>阻塞状态</li>
+<li>结束状态</li>
+</ul>
+<h3 id="进程间通信的方式"><a class="markdownIt-Anchor" href="#进程间通信的方式"></a> 进程间通信的方式</h3>
+<ul>
+<li>匿名管道/管道：父子进程之间的通信</li>
+<li>有名管道：</li>
+<li>共享内存</li>
+<li>消息队列</li>
+<li>信号</li>
+<li>信号量</li>
+<li>套接字</li>
+</ul>
+<h3 id="线程间同步的方式"><a class="markdownIt-Anchor" href="#线程间同步的方式"></a> 线程间同步的方式</h3>
+<ul>
+<li>互斥量</li>
+<li>信号量</li>
+<li>事件</li>
+</ul>
+<h3 id="进程的调度算法"><a class="markdownIt-Anchor" href="#进程的调度算法"></a> 进程的调度算法</h3>
+<ul>
+<li>先到先服务调度算法</li>
+<li>优先级调度</li>
+<li>时间片轮转调度算法</li>
+<li>短作业优先调度算法</li>
+<li>多级反馈队列调度算法</li>
+</ul>
+<h3 id="经典同步问题"><a class="markdownIt-Anchor" href="#经典同步问题"></a> 经典同步问题</h3>
+<ol>
+<li>哲学家进餐问题</li>
+<li>读者-写者问题</li>
+</ol>
+<h2 id="死锁"><a class="markdownIt-Anchor" href="#死锁"></a> 死锁</h2>
+<h3 id="死锁的必要条件"><a class="markdownIt-Anchor" href="#死锁的必要条件"></a> 死锁的必要条件</h3>
+<ol>
+<li>互斥：每个资源要么分配给一个进程，要么就是可用的</li>
+<li>占有且等待：已经得到了某个资源的进程可以再请求新的资源</li>
+<li>不可抢占：已经分配给一个进程的资源不能强制性的被抢占，它只能被占有它的进程显示的释放</li>
+<li>循环等待：有两个或者两个以上的进程组成一条环路，该环路中每个进程都在等到下一个进程占有的资源。</li>
+</ol>
+<h3 id="死锁的处理方法"><a class="markdownIt-Anchor" href="#死锁的处理方法"></a> 死锁的处理方法</h3>
+<ol>
+<li>鸵鸟策略</li>
+<li>死锁的检测和恢复</li>
+<li>死锁的预防</li>
+<li>死锁的避免</li>
+</ol>
+<h3 id="死锁的检测与恢复"><a class="markdownIt-Anchor" href="#死锁的检测与恢复"></a> 死锁的检测与恢复</h3>
+<h4 id="1-死锁的检测"><a class="markdownIt-Anchor" href="#1-死锁的检测"></a> 1. 死锁的检测</h4>
+<h4 id="2-死锁的恢复"><a class="markdownIt-Anchor" href="#2-死锁的恢复"></a> 2. 死锁的恢复</h4>
+<ul>
+<li>利用抢占恢复</li>
+<li>利用回滚恢复</li>
+<li>通过杀死进程恢复</li>
+</ul>
+<h3 id="死锁的预防"><a class="markdownIt-Anchor" href="#死锁的预防"></a> 死锁的预防</h3>
+<h3 id="死锁的避免"><a class="markdownIt-Anchor" href="#死锁的避免"></a> 死锁的避免</h3>
+<ol>
+<li>安全状态</li>
+<li>单个资源的银行家算法</li>
+<li>多个资源的银行家算法</li>
+</ol>
+<h2 id="内存管理"><a class="markdownIt-Anchor" href="#内存管理"></a> 内存管理</h2>
+<h3 id="什么是内存管理"><a class="markdownIt-Anchor" href="#什么是内存管理"></a> 什么是内存管理</h3>
+<ul>
+<li>逻辑地址到物理地址的映射</li>
+<li>内存的分配与回收</li>
+</ul>
+<h3 id="常见的几种内存管理机制"><a class="markdownIt-Anchor" href="#常见的几种内存管理机制"></a> 常见的几种内存管理机制</h3>
+<ul>
+<li>连续的：块式内存管理</li>
+<li>离散的：页式内存管理、段式内存管理、段页式内存管理</li>
+</ul>
+<ol>
+<li>段页式内存管理：既有了分段系统的共享和保护，又有了分页系统的虚拟内存功能。</li>
+</ol>
+<h3 id="分页和分段分别是解决什么问题"><a class="markdownIt-Anchor" href="#分页和分段分别是解决什么问题"></a> 分页和分段分别是解决什么问题</h3>
+<ul>
+<li>分页是为了实现虚拟内存，从而获得更大的地址空间</li>
+<li>分段是为了使程序和数据在逻辑上可以被划分为独立的地址空间，并且有利于共享和保护。</li>
+</ul>
+<h3 id="快表和多级页表"><a class="markdownIt-Anchor" href="#快表和多级页表"></a> 快表和多级页表</h3>
+<ul>
+<li>分页内存管理中：<code>虚拟地址到物理地址的转换要快</code>。<code>解决虚拟地址空间大，页表也会很大的问题</code>。</li>
+<li>快表：空间换时间的概念，将最近访问到的页面或段放到内存中的快表中，当访问的页或者段不在内存中时，首先先去快表中查找，如果快表中存在则直接使用，如果不存在在快表中，则调用相应的页面调度算法，将需要的页或段放入快表中。</li>
+<li>多级页表：<strong>对局部性原理的充分利用</strong>。<strong>时间换空间的概念</strong>。为了避免全部页表一直存放到内存中，占用过多的空间，将那些不需要的页表存放到磁盘中。</li>
+</ul>
+<h3 id="分页和分段的比较"><a class="markdownIt-Anchor" href="#分页和分段的比较"></a> 分页和分段的比较</h3>
+<ul>
+<li>分页和分段都是为了提高内存利用率，减少内存碎片。</li>
+<li>段和页都是离散存储的，段和页中的内存都是连续的。</li>
+<li>分页对程序员来说是透明的，分段需要程序员显式的划分每个段。</li>
+<li>页的大小是不可变得，段的大小是可变的。</li>
+<li>地址空间的维度：页的地址空间是一维的，段的地址空间是二维的。</li>
+<li><strong>出现的原因：</strong> 分页是主要是用于实现虚拟内存，从而可以获得更大的地址空间。分段是为了使程序和数据在逻辑上可以被划分为独立的地址空间，并且有利于共享和保护。段是逻辑信息的单位，在程序中可以体现为代码段和数据段，能够更好满足用户的需要。</li>
+</ul>
+<h4 id="逻辑虚拟地址和物理地址"><a class="markdownIt-Anchor" href="#逻辑虚拟地址和物理地址"></a> 逻辑(虚拟)地址和物理地址</h4>
+<h4 id="为什么需要虚拟地址空间"><a class="markdownIt-Anchor" href="#为什么需要虚拟地址空间"></a> 为什么需要虚拟地址空间</h4>
+<h3 id="虚拟内存"><a class="markdownIt-Anchor" href="#虚拟内存"></a> 虚拟内存</h3>
+<h4 id="什么是虚拟内存"><a class="markdownIt-Anchor" href="#什么是虚拟内存"></a> 什么是虚拟内存</h4>
+<ul>
+<li>让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。</li>
+<li>为了更好的管理内存，将内存抽象成地址空间，每个程序都拥有自己的地址空间。每个地址空间分割成多个块，每个块成为一页，每一页映射到相应的物理内存上，但不需要映射到连续的物理内存上，也不需要所有的页必须在物理内存中。当程序引用到不在物理内存中的页时，将缺失的部分装入物理内存。</li>
+<li>使应用程序错觉的认为自己拥有一段连续物理内存的错觉，实际上虚拟内存为应用程序分配了一段封闭的，连续的地址空间，地址空间分割成多个块，每个块为一页，分别映射到了不同的物理碎片上，有的还部分暂时的保存到了物理磁盘上。当应用程序需要的页不在内存空间中时，将缺失的部分装入物理内存中。</li>
+</ul>
+<h4 id="局部性原理"><a class="markdownIt-Anchor" href="#局部性原理"></a> 局部性原理</h4>
+<ul>
+<li>空间局部性：一旦应用程序访问到某个存储单元，在不久之后，附近的存储单元也可能被访问到。因为程序所访问的地址，可能集中在一定范围内，指令通常是顺序存放，顺序执行，数据一般以向量、数组等形式簇聚存储。</li>
+<li>时间局部性：程序中某个指令一旦执行，不久之后，该指令可能被再次执行。该数据被访问过，一段时间之后可能会被再次访问。(程序中存在大量的循环)</li>
+</ul>
+<h4 id="虚拟存储器"><a class="markdownIt-Anchor" href="#虚拟存储器"></a> 虚拟存储器</h4>
+<ul>
+<li>时间换空间的概念</li>
+<li>一部分程序被装入内存，当访问的数据或代码不在内存中时，将物理磁盘中的部分数据调入内存。</li>
+</ul>
+<h4 id="虚拟内存的技术实现"><a class="markdownIt-Anchor" href="#虚拟内存的技术实现"></a> 虚拟内存的技术实现</h4>
+<ul>
+<li>在离散分配的内存管理方式的基础上</li>
+<li>请求分页存储管理：建立在分页管理之上，为了支持虚拟存储功能而增加的请求调页功能和页面置换功能。在程序运行之前，将部分页调入内存，是程序能够正常运行。当遇到程序请求的页不在内存中时，系统调用页面置换算法，将部分页调入内存，同时，也将部分用不到的页调出内存。</li>
+<li>请求分段存储管理：建立在分段管理之上，提供了请求调段功能和分段置换功能。程序运行之前调入部分段使程序能够运行起来。可以使用请求调入中断，将程序即将使用到的段而又不在内存中的调入内存。当内存空间快满时，又可以将部分段调出内存。</li>
+<li>请求段页式存储管理</li>
+</ul>
+<h4 id="页面置换算法"><a class="markdownIt-Anchor" href="#页面置换算法"></a> 页面置换算法</h4>
+<ul>
+<li>OPT最佳页面置换算法</li>
+<li>FIFO先进先出页面置换算法</li>
+<li>LRU最近最久未使用页面置换算法</li>
+<li>LFU最少使用页面置换算法</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" rel="tag"># 虚拟内存</a>
+              <a href="/tags/%E8%BF%9B%E7%A8%8B/" rel="tag"># 进程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/09/REVIEW/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="数据库">
+      <i class="fa fa-chevron-left"></i> 数据库
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.</span> <span class="nav-text"> 什么是操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text"> 操作系统的基本功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text"> 操作系统的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text"> 什么是系统调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text"> 进程和线程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="nav-number">2.2.</span> <span class="nav-text"> 进程有哪几种状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text"> 进程间通信的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text"> 线程间同步的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="nav-number">2.5.</span> <span class="nav-text"> 进程的调度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text"> 经典同步问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text"> 死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text"> 死锁的必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text"> 死锁的处理方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E6%A3%80%E6%B5%8B%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.</span> <span class="nav-text"> 死锁的检测与恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%AD%BB%E9%94%81%E7%9A%84%E6%A3%80%E6%B5%8B"><span class="nav-number">3.3.1.</span> <span class="nav-text"> 1. 死锁的检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%AD%BB%E9%94%81%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">3.3.2.</span> <span class="nav-text"> 2. 死锁的恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E9%A2%84%E9%98%B2"><span class="nav-number">3.4.</span> <span class="nav-text"> 死锁的预防</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E9%81%BF%E5%85%8D"><span class="nav-number">3.5.</span> <span class="nav-text"> 死锁的避免</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text"> 内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text"> 什么是内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">4.2.</span> <span class="nav-text"> 常见的几种内存管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E5%88%86%E5%88%AB%E6%98%AF%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.</span> <span class="nav-text"> 分页和分段分别是解决什么问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E8%A1%A8%E5%92%8C%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="nav-number">4.4.</span> <span class="nav-text"> 快表和多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.5.</span> <span class="nav-text"> 分页和分段的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E5%92%8C%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="nav-number">4.5.1.</span> <span class="nav-text"> 逻辑(虚拟)地址和物理地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="nav-number">4.5.2.</span> <span class="nav-text"> 为什么需要虚拟地址空间</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">4.6.</span> <span class="nav-text"> 虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">4.6.1.</span> <span class="nav-text"> 什么是虚拟内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86"><span class="nav-number">4.6.2.</span> <span class="nav-text"> 局部性原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">4.6.3.</span> <span class="nav-text"> 虚拟存储器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.6.4.</span> <span class="nav-text"> 虚拟内存的技术实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="nav-number">4.6.5.</span> <span class="nav-text"> 页面置换算法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">CalebLogin</p>
+  <div class="site-description" itemprop="description">Talk is cheap, show me the code</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CalebLogin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
